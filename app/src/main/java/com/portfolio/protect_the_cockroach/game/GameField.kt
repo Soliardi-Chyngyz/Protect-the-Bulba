@@ -8,6 +8,7 @@ import android.view.SurfaceView
 class GameField @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : SurfaceView(context, attrs, defStyleAttr), SurfaceHolder.Callback {
 
     private var gameDrawThread: GameDrawThread? = null
+    private var typeMove: TypeMove? = null
 
     init {
         holder.addCallback(this)
@@ -25,5 +26,12 @@ class GameField @JvmOverloads constructor(context: Context, attrs: AttributeSet?
 
     override fun surfaceDestroyed(holder: SurfaceHolder) {
         gameDrawThread?.join()
+    }
+
+    enum class TypeMove {
+        UP,
+        DOWN,
+        LEFT,
+        RIGHT
     }
 }

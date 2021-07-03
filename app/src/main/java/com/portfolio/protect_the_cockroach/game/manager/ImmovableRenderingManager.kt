@@ -5,7 +5,7 @@ import android.graphics.*
 import com.portfolio.protect_the_cockroach.R
 import com.portfolio.protect_the_cockroach.game.base.BaseManager
 import com.portfolio.protect_the_cockroach.game.model.GameCoordinate
-import com.portfolio.protect_the_cockroach.game.model.game.WallObject
+import com.portfolio.protect_the_cockroach.game.immovable.WallObject
 
 class ImmovableRenderingManager(widthScreen: Double, heightScreen: Double, var resources: Resources): BaseManager(widthScreen, heightScreen) {
 
