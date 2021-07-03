@@ -42,15 +42,15 @@ class GameDrawThread(
             if (elapsedTime > 30) {
                prevTime = now
 
-               dynamicRenderingManager.draw(canvas)
             }
 
             canvas = surfaceHolder?.lockCanvas(null)
 
             surfaceHolder?.let {
                synchronized(it) {
-                  canvas?.drawColor(Color.BLACK)
+                  canvas?.drawColor(Color.GRAY)
                   immovableRenderingManager.draw(canvas)
+                  dynamicRenderingManager.draw(canvas)
                }
             }
          } finally {
