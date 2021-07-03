@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="NavigationStyleUp">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart" tools:targetApi="jelly_bean_mr1">100dp</item>
+        <item name="android:layout_marginLeft">100dp</item>
+        <item name="layout_constraintStart_toStartOf">parent</item>
+        <item name="layout_constraintBottom_toBottomOf">parent</item>
+        <item name="layout_constraintTop_toTopOf">parent</item>
+        <item name="android:src">@drawable/ic_up</item>
+    </style>
+    <style name="NavStyleLeft">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart" tools:targetApi="jelly_bean_mr1">24dp</item>
+        <item name="android:layout_marginLeft">24dp</item>
+        <item name="layout_constraintTop_toBottomOf">@id/up</item>
+        <item name="layout_constraintStart_toStartOf">parent</item>
+        <item name="android:src">@drawable/ic_left</item>
+    </style>
+    <style name="NavStyleRight">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart" tools:targetApi="jelly_bean_mr1">76dp</item>
+        <item name="android:layout_marginLeft">76dp</item>
+        <item name="layout_constraintTop_toBottomOf">@id/up</item>
+        <item name="layout_constraintLeft_toRightOf">@id/left</item>
+        <item name="android:src">@drawable/ic_right</item>
+    </style>
+    <style name="NavStyleDown">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginStart" tools:targetApi="jelly_bean_mr1">100dp</item>
+        <item name="android:layout_marginLeft">100dp</item>
+        <item name="layout_constraintStart_toStartOf">parent</item>
+        <item name="layout_constraintTop_toBottomOf">@id/left</item>
+        <item name="android:src">@drawable/ic_down</item>
+    </style>
+    <style name="NavStyleFire">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginEnd" tools:targetApi="jelly_bean_mr1">130dp</item>
+        <item name="android:padding">20dp</item>
+        <item name="android:layout_marginBottom">80dp</item>
+        <item name="layout_constraintEnd_toEndOf">parent</item>
+        <item name="layout_constraintBottom_toBottomOf">parent</item>
+        <item name="android:src">@drawable/ic_fire</item>
+    </style>
+
+</resources>

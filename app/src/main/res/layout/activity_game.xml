@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".GameActivity">
+
+    <com.portfolio.protect_the_cockroach.game.GameField
+        android:id="@+id/game_field"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <ImageView
+        android:id="@+id/up"
+        style="@style/NavigationStyleUp"
+        tools:ignore="ContentDescription,MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/left"
+        style="@style/NavStyleLeft"
+        tools:ignore="ContentDescription,MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/right"
+        style="@style/NavStyleRight"
+        tools:ignore="ContentDescription,MissingConstraints" />
+
+    <ImageView
+        android:id="@+id/down"
+        style="@style/NavStyleDown"
+        tools:ignore="ContentDescription,MissingConstraints"
+        />
+
+    <ImageView
+        android:id="@+id/fire"
+        style="@style/NavStyleFire"
+        tools:ignore="ContentDescription,MissingConstraints" />
+</androidx.constraintlayout.widget.ConstraintLayout>
