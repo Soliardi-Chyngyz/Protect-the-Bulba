@@ -41,7 +41,6 @@ class GameDrawThread(
             val elapsedTime = now - prevTime
             if (elapsedTime > 30) {
                prevTime = now
-
             }
 
             canvas = surfaceHolder?.lockCanvas(null)

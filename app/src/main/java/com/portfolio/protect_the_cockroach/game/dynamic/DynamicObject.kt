@@ -6,15 +6,26 @@ import android.graphics.BitmapFactory
 import androidx.annotation.DrawableRes
 import com.portfolio.protect_the_cockroach.game.model.GameCoordinate
 import com.portfolio.protect_the_cockroach.game.model.GameObject
+import com.portfolio.protect_the_cockroach.game.utils.ImageRotationUtility
 
-class DynamicObject (coordinate: GameCoordinate, widthCell: Double, heightCell: Double, resources: Resources, @DrawableRes idBitmap: Int) : GameObject(
+class DynamicObject(
+   coordinate: GameCoordinate,
+   widthCell: Double,
+   heightCell: Double,
+   resources: Resources,
+   @DrawableRes idBitmap: Int
+) : GameObject(
    coordinate,
    widthCell,
    heightCell,
 ) {
 
    var type: Type? = null
-   var bitmap: Bitmap = Bitmap.createBitmap(BitmapFactory.decodeResource(resources, idBitmap), 0, 0, widthCell.toInt(), heightCell.toInt())
+
+   val bitmap = BitmapFactory.decodeResource(resources, idBitmap)
+   val resizeBitmap =
+      Bitmap.createScaledBitmap(bitmap, widthCell.toInt(), widthCell.toInt(), false)!!
+   val rotatedBitmap = ImageRotationUtility.rotateBitmap(resizeBitmap, 90F)
 
    enum class Type {
       Vulnerable,

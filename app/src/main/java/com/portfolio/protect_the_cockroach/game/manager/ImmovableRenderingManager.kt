@@ -2,6 +2,8 @@ package com.portfolio.protect_the_cockroach.game.manager
 
 import android.content.res.Resources
 import android.graphics.*
+import android.os.Build
+import androidx.annotation.RequiresApi
 import com.portfolio.protect_the_cockroach.R
 import com.portfolio.protect_the_cockroach.game.base.BaseManager
 import com.portfolio.protect_the_cockroach.game.model.GameCoordinate
@@ -49,6 +51,6 @@ class ImmovableRenderingManager(widthScreen: Double, heightScreen: Double, var r
     }
 
     private fun WallObject.drawWall(canvas: Canvas?) {
-        canvas?.drawBitmap(bitmap, pointStart.x.toFloat(), pointStart.y.toFloat(), Paint())
+        canvas?.drawBitmap(resizeBitmap, pointStart.x.toFloat(), pointStart.y.toFloat(), Paint())
     }
 }

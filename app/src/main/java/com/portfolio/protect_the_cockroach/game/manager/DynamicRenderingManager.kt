@@ -33,7 +33,7 @@ class DynamicRenderingManager(
    }
 
    private fun DynamicObject.drawTank(canvas: Canvas?) {
-      canvas?.drawBitmap(bitmap, gamePoint!!.x.toFloat(), gamePoint!!.y.toFloat(), paint)
+      canvas?.drawBitmap(rotatedBitmap, pointStart.x.toFloat(), pointStart.y.toFloat(), paint)
    }
 
    override fun setOnTouchClick(typeMove: GameField.TypeMove?) {
