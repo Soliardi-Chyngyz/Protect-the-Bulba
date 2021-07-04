@@ -8,14 +8,12 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import com.portfolio.protect_the_cockroach.`interface`.OnTouchListener
-import com.portfolio.protect_the_cockroach.game.GameDrawThread
+import androidx.lifecycle.ViewModelProvider
 import com.portfolio.protect_the_cockroach.game.GameField
 import com.portfolio.protect_the_cockroach.game.manager.DynamicRenderingManager
 
 @Suppress("DEPRECATION")
-class GameActivity : AppCompatActivity(){
-   private var callBack: OnTouchListener? = null
+class GameActivity : AppCompatActivity() {
 
    override fun onCreate(savedInstanceState: Bundle?) {
       super.onCreate(savedInstanceState)
@@ -32,10 +30,7 @@ class GameActivity : AppCompatActivity(){
       window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
       setupUI()
-   }
 
-   fun setListener(callback: OnTouchListener) {
-      this.callBack = callback
    }
 
    private fun setupUI() {
@@ -48,14 +43,16 @@ class GameActivity : AppCompatActivity(){
    @SuppressLint("ClickableViewAccessibility")
    private fun ImageView.setClickListener(typeMove: GameField.TypeMove) {
       this.setOnTouchListener { _, event ->
+         var type: GameField.TypeMove? = null
          when (event?.action) {
             MotionEvent.ACTION_DOWN -> {
-               callBack?.setOnTouchClick(typeMove)
+               type = typeMove
             }
             MotionEvent.ACTION_UP -> {
-               callBack?.setOnTouchClick(null)
+               type = null
             }
          }
+               DynamicRenderingManager(1920.0, 1040.0, resources).anonymous(type)
          true
       }
    }
