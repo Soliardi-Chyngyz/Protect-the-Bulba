@@ -3,7 +3,6 @@ package com.portfolio.protect_the_cockroach.game.manager
 import android.content.res.Resources
 import android.graphics.Canvas
 import android.graphics.Paint
-import android.graphics.Point
 import com.portfolio.protect_the_cockroach.GameActivity
 import com.portfolio.protect_the_cockroach.R
 import com.portfolio.protect_the_cockroach.`interface`.OnTouchListener
@@ -21,6 +20,7 @@ class DynamicRenderingManager(
 
    private var gamePoint: GamePoint? = null
    private val paint: Paint
+   private var rotation = 0F
 
    init {
       GameActivity().setListener(this)
@@ -29,7 +29,8 @@ class DynamicRenderingManager(
    }
 
    fun draw(canvas: Canvas?) {
-      DynamicObject(GameCoordinate(5, 5), widthCell, widthCell, resources, R.drawable.tank_hero).drawTank(canvas)
+      DynamicObject(GameCoordinate(8, 9), widthCell, heightCell, resources, R.drawable.tank_hero, rotation).drawTank(canvas)
+      DynamicObject(GameCoordinate(10, 9), widthCell, heightCell, resources, R.drawable.cocroach, 0F).drawTank(canvas)
    }
 
    private fun DynamicObject.drawTank(canvas: Canvas?) {
@@ -44,12 +45,15 @@ class DynamicRenderingManager(
             }
             GameField.TypeMove.DOWN -> {
                gamePoint!!.y += 10
+               rotation = 180F
             }
             GameField.TypeMove.LEFT -> {
                gamePoint!!.x -= 10
+               rotation = -90F
             }
             GameField.TypeMove.RIGHT -> {
                gamePoint!!.x += 10
+               rotation = 90F
             }
          }
       }

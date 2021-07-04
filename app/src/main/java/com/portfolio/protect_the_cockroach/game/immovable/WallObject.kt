@@ -24,7 +24,7 @@ class WallObject(
 
    val bitmap = BitmapFactory.decodeResource(resources, idBitmap)
    val resizeBitmap =
-      Bitmap.createScaledBitmap(bitmap, widthCell.toInt(), widthCell.toInt(), false)!!
+      Bitmap.createScaledBitmap(bitmap, widthCell.toInt(), heightCell.toInt(), false)!!
 
    enum class Type {
       Vulnerable,

@@ -1,7 +1,7 @@
 package com.portfolio.protect_the_cockroach.game.model
 
 abstract class GameObject(
-    var coordinate: GameCoordinate,
+    coordinate: GameCoordinate,
     widthCell: Double,
     heightCell: Double,
 ) {

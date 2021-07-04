@@ -13,7 +13,8 @@ class DynamicObject(
    widthCell: Double,
    heightCell: Double,
    resources: Resources,
-   @DrawableRes idBitmap: Int
+   @DrawableRes idBitmap: Int,
+   rotation: Float
 ) : GameObject(
    coordinate,
    widthCell,
@@ -25,7 +26,7 @@ class DynamicObject(
    val bitmap = BitmapFactory.decodeResource(resources, idBitmap)
    val resizeBitmap =
       Bitmap.createScaledBitmap(bitmap, widthCell.toInt(), widthCell.toInt(), false)!!
-   val rotatedBitmap = ImageRotationUtility.rotateBitmap(resizeBitmap, 90F)
+   val rotatedBitmap = ImageRotationUtility.rotateBitmap(resizeBitmap, rotation)
 
    enum class Type {
       Vulnerable,

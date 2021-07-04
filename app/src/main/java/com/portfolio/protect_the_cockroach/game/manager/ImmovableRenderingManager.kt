@@ -2,12 +2,10 @@ package com.portfolio.protect_the_cockroach.game.manager
 
 import android.content.res.Resources
 import android.graphics.*
-import android.os.Build
-import androidx.annotation.RequiresApi
 import com.portfolio.protect_the_cockroach.R
 import com.portfolio.protect_the_cockroach.game.base.BaseManager
-import com.portfolio.protect_the_cockroach.game.model.GameCoordinate
 import com.portfolio.protect_the_cockroach.game.immovable.WallObject
+import com.portfolio.protect_the_cockroach.game.model.GameCoordinate
 
 class ImmovableRenderingManager(widthScreen: Double, heightScreen: Double, var resources: Resources): BaseManager(widthScreen, heightScreen) {
 
@@ -41,13 +39,24 @@ class ImmovableRenderingManager(widthScreen: Double, heightScreen: Double, var r
     }
 
     private fun drawWalls(canvas: Canvas?) {
-        WallObject(GameCoordinate(3, 3), widthCell, heightCell, resources, R.drawable.beton).drawWall(canvas)
-        WallObject(GameCoordinate(4, 3), widthCell, heightCell, resources, R.drawable.beton).drawWall(canvas)
-        WallObject(GameCoordinate(5, 3), widthCell, heightCell, resources, R.drawable.beton).drawWall(canvas)
-        WallObject(GameCoordinate(6, 3), widthCell, heightCell, resources, R.drawable.beton).drawWall(canvas)
-        WallObject(GameCoordinate(7, 3), widthCell, heightCell, resources, R.drawable.beton).drawWall(canvas)
-        WallObject(GameCoordinate(8, 3), widthCell, heightCell, resources, R.drawable.beton).drawWall(canvas)
-        WallObject(GameCoordinate(9, 3), widthCell, heightCell, resources, R.drawable.beton).drawWall(canvas)
+        WallObject(GameCoordinate(2, 2), widthCell, heightCell, resources, R.drawable.kirpich).drawWall(canvas)
+        WallObject(GameCoordinate(2, 3), widthCell, heightCell, resources, R.drawable.kirpich).drawWall(canvas)
+        WallObject(GameCoordinate(3, 2), widthCell, heightCell, resources, R.drawable.kirpich).drawWall(canvas)
+        WallObject(GameCoordinate(16, 2), widthCell, heightCell, resources, R.drawable.kirpich).drawWall(canvas)
+        WallObject(GameCoordinate(17, 2), widthCell, heightCell, resources, R.drawable.kirpich).drawWall(canvas)
+        WallObject(GameCoordinate(17, 3), widthCell, heightCell, resources, R.drawable.kirpich).drawWall(canvas)
+
+        WallObject(GameCoordinate(8, 4), widthCell, heightCell, resources, R.drawable.beton).drawWall(canvas)
+        WallObject(GameCoordinate(9, 4), widthCell, heightCell, resources, R.drawable.beton).drawWall(canvas)
+        WallObject(GameCoordinate(10, 4), widthCell, heightCell, resources, R.drawable.beton).drawWall(canvas)
+        WallObject(GameCoordinate(11, 4), widthCell, heightCell, resources, R.drawable.beton).drawWall(canvas)
+        WallObject(GameCoordinate(12, 4), widthCell, heightCell, resources, R.drawable.beton).drawWall(canvas)
+
+        WallObject(GameCoordinate(9, 9), widthCell, heightCell, resources, R.drawable.kirpich).drawWall(canvas)
+        WallObject(GameCoordinate(11, 9), widthCell, heightCell, resources, R.drawable.kirpich).drawWall(canvas)
+        WallObject(GameCoordinate(9, 8), widthCell, heightCell, resources, R.drawable.kirpich).drawWall(canvas)
+        WallObject(GameCoordinate(10, 8), widthCell, heightCell, resources, R.drawable.kirpich).drawWall(canvas)
+        WallObject(GameCoordinate(11, 8), widthCell, heightCell, resources, R.drawable.kirpich).drawWall(canvas)
     }
 
     private fun WallObject.drawWall(canvas: Canvas?) {
