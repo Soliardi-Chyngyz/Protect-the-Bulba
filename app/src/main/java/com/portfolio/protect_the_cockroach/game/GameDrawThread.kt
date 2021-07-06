@@ -4,6 +4,7 @@ import android.content.res.Resources
 import android.graphics.Canvas
 import android.graphics.Color
 import android.view.SurfaceHolder
+import com.portfolio.protect_the_cockroach.`interface`.OnTouchListener
 import com.portfolio.protect_the_cockroach.game.manager.DynamicRenderingManager
 import com.portfolio.protect_the_cockroach.game.manager.ImmovableRenderingManager
 import com.portfolio.protect_the_cockroach.game.manager.UIEventsManager
@@ -19,7 +20,7 @@ class GameDrawThread(
 
    private var immovableRenderingManager: ImmovableRenderingManager =
       ImmovableRenderingManager(widthScreen, heightScreen, resources)
-   private var dynamicRenderingManager: DynamicRenderingManager =
+   var dynamicRenderingManager: DynamicRenderingManager =
       DynamicRenderingManager(widthScreen, heightScreen, resources)
    private var uiEventsManager: UIEventsManager = UIEventsManager(widthScreen, heightScreen)
 
@@ -35,26 +36,25 @@ class GameDrawThread(
 
       while (runFlag) {
          canvas = null
+         val now = System.currentTimeMillis()
+         val elapsedTime = now - prevTime
+         if (elapsedTime > 10) {
+            prevTime = now
 
-         try {
-            val now = System.currentTimeMillis()
-            val elapsedTime = now - prevTime
-            if (elapsedTime > 30) {
-               prevTime = now
-            }
+            try {
+               canvas = surfaceHolder?.lockCanvas(null)
 
-            canvas = surfaceHolder?.lockCanvas(null)
-
-            surfaceHolder?.let {
-               synchronized(it) {
-                  canvas?.drawColor(Color.GRAY)
-                  immovableRenderingManager.draw(canvas)
-                  dynamicRenderingManager.draw(canvas)
+               surfaceHolder?.let {
+                  synchronized(it) {
+                     canvas?.drawColor(Color.GRAY)
+                     immovableRenderingManager.draw(canvas)
+                     dynamicRenderingManager.draw(canvas)
+                  }
                }
-            }
-         } finally {
-            if (canvas != null) {
-               surfaceHolder!!.unlockCanvasAndPost(canvas)
+            } finally {
+               if (canvas != null) {
+                  surfaceHolder!!.unlockCanvasAndPost(canvas)
+               }
             }
          }
       }

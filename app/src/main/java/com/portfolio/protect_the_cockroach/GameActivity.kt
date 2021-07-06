@@ -8,12 +8,15 @@ import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.ViewModelProvider
 import com.portfolio.protect_the_cockroach.game.GameField
 import com.portfolio.protect_the_cockroach.game.manager.DynamicRenderingManager
 
 @Suppress("DEPRECATION")
 class GameActivity : AppCompatActivity() {
+
+   private val gameField: GameField by lazy {
+      return@lazy this.findViewById<GameField>(R.id.game_field)
+   }
 
    override fun onCreate(savedInstanceState: Bundle?) {
       super.onCreate(savedInstanceState)
@@ -30,7 +33,6 @@ class GameActivity : AppCompatActivity() {
       window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
       setupUI()
-
    }
 
    private fun setupUI() {
@@ -47,12 +49,13 @@ class GameActivity : AppCompatActivity() {
          when (event?.action) {
             MotionEvent.ACTION_DOWN -> {
                type = typeMove
+               gameField.getListener()?.setOnTouchClick(type)
             }
             MotionEvent.ACTION_UP -> {
                type = null
+               gameField.getListener()?.setOnTouchClick(type)
             }
          }
-               DynamicRenderingManager(1920.0, 1040.0, resources).anonymous(type)
          true
       }
    }

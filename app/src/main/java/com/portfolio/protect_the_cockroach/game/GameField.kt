@@ -4,6 +4,7 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.SurfaceHolder
 import android.view.SurfaceView
+import com.portfolio.protect_the_cockroach.`interface`.OnTouchListener
 
 class GameField @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null, defStyleAttr: Int = 0) : SurfaceView(context, attrs, defStyleAttr), SurfaceHolder.Callback {
 
@@ -16,6 +17,10 @@ class GameField @JvmOverloads constructor(context: Context, attrs: AttributeSet?
 
     override fun surfaceCreated(holder: SurfaceHolder) {
 
+    }
+
+    fun getListener(): com.portfolio.protect_the_cockroach.`interface`.OnTouchListener? {
+        return gameDrawThread?.dynamicRenderingManager
     }
 
     override fun surfaceChanged(holder: SurfaceHolder, format: Int, width: Int, height: Int) {
