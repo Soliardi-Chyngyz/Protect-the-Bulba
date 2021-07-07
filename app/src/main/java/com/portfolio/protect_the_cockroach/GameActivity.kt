@@ -1,14 +1,14 @@
 package com.portfolio.protect_the_cockroach
 
 import android.annotation.SuppressLint
-import android.os.Build
-import android.os.Bundle
+import android.os.*
 import android.view.MotionEvent
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.portfolio.protect_the_cockroach.game.GameField
+import kotlin.random.Random
 
 @Suppress("DEPRECATION")
 class GameActivity : AppCompatActivity() {
@@ -31,7 +31,22 @@ class GameActivity : AppCompatActivity() {
       }
       window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
+      CDTimers()
+
       setupUI()
+   }
+
+   private fun CDTimers() {
+      val value = Random.nextInt(5)
+      object: CountDownTimer(Random.nextLong(2000, 4000), Random.nextLong(600, 1000)) {
+         override fun onTick(millisUntilFinished: Long) {
+            gameField.getListener()?.setOnTickTimer(value)
+         }
+         override fun onFinish() {
+            gameField.getListener()?.setOnFinishTimer(true)
+            CDTimers()
+         }
+      }.start()
    }
 
    private fun setupUI() {

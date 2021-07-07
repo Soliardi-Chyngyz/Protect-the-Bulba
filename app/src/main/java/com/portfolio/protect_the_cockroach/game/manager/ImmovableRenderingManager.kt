@@ -6,7 +6,6 @@ import com.portfolio.protect_the_cockroach.R
 import com.portfolio.protect_the_cockroach.game.base.BaseManager
 import com.portfolio.protect_the_cockroach.game.immovable.WallObject
 import com.portfolio.protect_the_cockroach.game.model.GameCoordinate
-import com.portfolio.protect_the_cockroach.game.model.GameObject
 import com.portfolio.protect_the_cockroach.game.model.ObjectCoordinate
 
 class ImmovableRenderingManager(
@@ -71,7 +70,7 @@ class ImmovableRenderingManager(
          resources,
          R.drawable.kirpich
       ).drawWall(canvas)
-      val ob4 = WallObject(
+      WallObject(
          GameCoordinate(16, 2),
          widthCell,
          heightCell,

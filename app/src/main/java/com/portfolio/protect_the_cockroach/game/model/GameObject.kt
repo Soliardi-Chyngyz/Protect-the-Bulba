@@ -5,8 +5,6 @@ abstract class GameObject(
     widthCell: Double,
     heightCell: Double,
 ) {
-
-
     var pointCenter: GamePoint = GamePoint()
 
     var upLeftX: Double
