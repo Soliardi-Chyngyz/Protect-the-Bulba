@@ -3,17 +3,17 @@ package com.portfolio.protect_the_cockroach.game
 import android.content.res.Resources
 import android.graphics.Canvas
 import android.graphics.Color
+import android.os.Handler
 import android.view.SurfaceHolder
-import com.portfolio.protect_the_cockroach.`interface`.OnTouchListener
 import com.portfolio.protect_the_cockroach.game.manager.DynamicRenderingManager
 import com.portfolio.protect_the_cockroach.game.manager.ImmovableRenderingManager
 import com.portfolio.protect_the_cockroach.game.manager.UIEventsManager
 
 class GameDrawThread(
-    surfaceHolder: SurfaceHolder,
-    resources: Resources,
-    widthScreen: Double,
-    heightScreen: Double,
+   surfaceHolder: SurfaceHolder,
+   resources: Resources,
+   widthScreen: Double,
+   heightScreen: Double,
 ) : Thread() {
 
    var runFlag = false
@@ -38,9 +38,8 @@ class GameDrawThread(
          canvas = null
          val now = System.currentTimeMillis()
          val elapsedTime = now - prevTime
-         if (elapsedTime > 10) {
+         if (elapsedTime > 2) {
             prevTime = now
-
             try {
                canvas = surfaceHolder?.lockCanvas(null)
 
@@ -58,5 +57,6 @@ class GameDrawThread(
             }
          }
       }
+
    }
 }

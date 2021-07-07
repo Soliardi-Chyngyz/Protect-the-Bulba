@@ -6,60 +6,161 @@ import com.portfolio.protect_the_cockroach.R
 import com.portfolio.protect_the_cockroach.game.base.BaseManager
 import com.portfolio.protect_the_cockroach.game.immovable.WallObject
 import com.portfolio.protect_the_cockroach.game.model.GameCoordinate
+import com.portfolio.protect_the_cockroach.game.model.GameObject
+import com.portfolio.protect_the_cockroach.game.model.ObjectCoordinate
 
-class ImmovableRenderingManager(widthScreen: Double, heightScreen: Double, var resources: Resources): BaseManager(widthScreen, heightScreen) {
+class ImmovableRenderingManager(
+   widthScreen: Double,
+   heightScreen: Double,
+   var resources: Resources
+) : BaseManager(widthScreen, heightScreen) {
 
-    private val tableLinePaint: Paint = run {
-        val paint = Paint()
-        paint.color = Color.WHITE
-        paint.strokeWidth = 1f
-        return@run paint
-    }
+   private val tableLinePaint: Paint = run {
+      val paint = Paint()
+      paint.color = Color.WHITE
+      paint.strokeWidth = 1f
+      return@run paint
+   }
 
-    fun draw(canvas: Canvas?) {
-        drawTableLine(canvas)
-        drawWalls(canvas)
-    }
+   companion object {
+      val list = arrayListOf<ObjectCoordinate>()
+   }
 
-    private fun drawTableLine(canvas: Canvas?) {
-        for (horizontalIndex in 0..horizontalCountCell.toInt()) {
-            for (verticalIndex in 0..verticalCountCell.toInt()) {
-                canvas?.drawLine(
-                    0F, (heightCell * verticalIndex).toFloat(),
-                    widthScreen.toFloat(), (heightCell * verticalIndex).toFloat(),
-                    tableLinePaint
-                )
-                canvas?.drawLine(
-                    (widthCell * horizontalIndex).toFloat(), 0f,
-                    (widthCell * horizontalIndex).toFloat(), heightScreen.toFloat(),
-                    tableLinePaint
-                )
-            }
-        }
-    }
+   fun draw(canvas: Canvas?) {
+      drawTableLine(canvas)
+      drawWalls(canvas)
+   }
 
-    private fun drawWalls(canvas: Canvas?) {
-        WallObject(GameCoordinate(2, 2), widthCell, heightCell, resources, R.drawable.kirpich).drawWall(canvas)
-        WallObject(GameCoordinate(2, 3), widthCell, heightCell, resources, R.drawable.kirpich).drawWall(canvas)
-        WallObject(GameCoordinate(3, 2), widthCell, heightCell, resources, R.drawable.kirpich).drawWall(canvas)
-        WallObject(GameCoordinate(16, 2), widthCell, heightCell, resources, R.drawable.kirpich).drawWall(canvas)
-        WallObject(GameCoordinate(17, 2), widthCell, heightCell, resources, R.drawable.kirpich).drawWall(canvas)
-        WallObject(GameCoordinate(17, 3), widthCell, heightCell, resources, R.drawable.kirpich).drawWall(canvas)
+   private fun drawTableLine(canvas: Canvas?) {
+      for (horizontalIndex in 0..horizontalCountCell.toInt()) {
+         for (verticalIndex in 0..verticalCountCell.toInt()) {
+            canvas?.drawLine(
+               0F, (heightCell * verticalIndex).toFloat(),
+               widthScreen.toFloat(), (heightCell * verticalIndex).toFloat(),
+               tableLinePaint
+            )
+            canvas?.drawLine(
+               (widthCell * horizontalIndex).toFloat(), 0f,
+               (widthCell * horizontalIndex).toFloat(), heightScreen.toFloat(),
+               tableLinePaint
+            )
+         }
+      }
+   }
 
-        WallObject(GameCoordinate(8, 4), widthCell, heightCell, resources, R.drawable.beton).drawWall(canvas)
-        WallObject(GameCoordinate(9, 4), widthCell, heightCell, resources, R.drawable.beton).drawWall(canvas)
-        WallObject(GameCoordinate(10, 4), widthCell, heightCell, resources, R.drawable.beton).drawWall(canvas)
-        WallObject(GameCoordinate(11, 4), widthCell, heightCell, resources, R.drawable.beton).drawWall(canvas)
-        WallObject(GameCoordinate(12, 4), widthCell, heightCell, resources, R.drawable.beton).drawWall(canvas)
+   private fun drawWalls(canvas: Canvas?) {
+      list.clear()
+      WallObject(
+         GameCoordinate(2, 2),
+         widthCell,
+         heightCell,
+         resources,
+         R.drawable.kirpich
+      ).drawWall(canvas)
+      WallObject(
+         GameCoordinate(2, 3),
+         widthCell,
+         heightCell,
+         resources,
+         R.drawable.kirpich
+      ).drawWall(canvas)
+      WallObject(
+         GameCoordinate(3, 2),
+         widthCell,
+         heightCell,
+         resources,
+         R.drawable.kirpich
+      ).drawWall(canvas)
+      val ob4 = WallObject(
+         GameCoordinate(16, 2),
+         widthCell,
+         heightCell,
+         resources,
+         R.drawable.kirpich
+      ).drawWall(canvas)
+      WallObject(
+         GameCoordinate(17, 2),
+         widthCell,
+         heightCell,
+         resources,
+         R.drawable.kirpich
+      ).drawWall(canvas)
+      WallObject(
+         GameCoordinate(17, 3),
+         widthCell,
+         heightCell,
+         resources,
+         R.drawable.kirpich
+      ).drawWall(canvas)
 
-        WallObject(GameCoordinate(9, 9), widthCell, heightCell, resources, R.drawable.kirpich).drawWall(canvas)
-        WallObject(GameCoordinate(11, 9), widthCell, heightCell, resources, R.drawable.kirpich).drawWall(canvas)
-        WallObject(GameCoordinate(9, 8), widthCell, heightCell, resources, R.drawable.kirpich).drawWall(canvas)
-        WallObject(GameCoordinate(10, 8), widthCell, heightCell, resources, R.drawable.kirpich).drawWall(canvas)
-        WallObject(GameCoordinate(11, 8), widthCell, heightCell, resources, R.drawable.kirpich).drawWall(canvas)
-    }
+      WallObject(GameCoordinate(8, 4), widthCell, heightCell, resources, R.drawable.beton).drawWall(
+         canvas
+      )
+      WallObject(GameCoordinate(9, 4), widthCell, heightCell, resources, R.drawable.beton).drawWall(
+         canvas
+      )
+      WallObject(
+         GameCoordinate(10, 4),
+         widthCell,
+         heightCell,
+         resources,
+         R.drawable.beton
+      ).drawWall(canvas)
+      WallObject(
+         GameCoordinate(11, 4),
+         widthCell,
+         heightCell,
+         resources,
+         R.drawable.beton
+      ).drawWall(canvas)
+      WallObject(
+         GameCoordinate(12, 4),
+         widthCell,
+         heightCell,
+         resources,
+         R.drawable.beton
+      ).drawWall(canvas)
 
-    private fun WallObject.drawWall(canvas: Canvas?) {
-        canvas?.drawBitmap(resizeBitmap, pointStart.x.toFloat(), pointStart.y.toFloat(), Paint())
-    }
+      WallObject(
+         GameCoordinate(9, 9),
+         widthCell,
+         heightCell,
+         resources,
+         R.drawable.kirpich
+      ).drawWall(canvas)
+      WallObject(
+         GameCoordinate(11, 9),
+         widthCell,
+         heightCell,
+         resources,
+         R.drawable.kirpich
+      ).drawWall(canvas)
+      WallObject(
+         GameCoordinate(9, 8),
+         widthCell,
+         heightCell,
+         resources,
+         R.drawable.kirpich
+      ).drawWall(canvas)
+      WallObject(
+         GameCoordinate(10, 8),
+         widthCell,
+         heightCell,
+         resources,
+         R.drawable.kirpich
+      ).drawWall(canvas)
+      WallObject(
+         GameCoordinate(11, 8),
+         widthCell,
+         heightCell,
+         resources,
+         R.drawable.kirpich
+      ).drawWall(canvas)
+   }
+
+   private fun WallObject.drawWall(canvas: Canvas?) {
+      val ob1 = ObjectCoordinate(upLeftX, upRightX, upLeftY, downLeftY)
+      list.add(ob1)
+      canvas?.drawBitmap(resizeBitmap, pointStart.x.toFloat(), pointStart.y.toFloat(), Paint())
+   }
 }

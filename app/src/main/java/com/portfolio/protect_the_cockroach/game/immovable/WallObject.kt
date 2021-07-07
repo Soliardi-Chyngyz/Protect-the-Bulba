@@ -6,7 +6,6 @@ import android.graphics.BitmapFactory
 import androidx.annotation.DrawableRes
 import com.portfolio.protect_the_cockroach.game.model.GameCoordinate
 import com.portfolio.protect_the_cockroach.game.model.GameObject
-import com.portfolio.protect_the_cockroach.game.utils.ImageRotationUtility
 
 class WallObject(
    coordinate: GameCoordinate,

@@ -9,7 +9,6 @@ import android.view.WindowManager
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.portfolio.protect_the_cockroach.game.GameField
-import com.portfolio.protect_the_cockroach.game.manager.DynamicRenderingManager
 
 @Suppress("DEPRECATION")
 class GameActivity : AppCompatActivity() {
@@ -45,7 +44,7 @@ class GameActivity : AppCompatActivity() {
    @SuppressLint("ClickableViewAccessibility")
    private fun ImageView.setClickListener(typeMove: GameField.TypeMove) {
       this.setOnTouchListener { _, event ->
-         var type: GameField.TypeMove? = null
+         val type: GameField.TypeMove?
          when (event?.action) {
             MotionEvent.ACTION_DOWN -> {
                type = typeMove
