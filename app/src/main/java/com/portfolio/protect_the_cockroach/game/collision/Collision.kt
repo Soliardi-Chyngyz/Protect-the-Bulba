@@ -1,24 +1,22 @@
 package com.portfolio.protect_the_cockroach.game.collision
 
-import com.portfolio.protect_the_cockroach.game.manager.DynamicRenderingManager
 import com.portfolio.protect_the_cockroach.game.manager.ImmovableRenderingManager
+import com.portfolio.protect_the_cockroach.game.model.GameObject
 import com.portfolio.protect_the_cockroach.game.model.ObjectCoordinate
 
 class Collision {
 
    private val listOfStaticObj = ImmovableRenderingManager.list
-   private val listOfDynamicObj = DynamicRenderingManager.list
+//   private val listOfDynamicObj = arrayListOf<ObjectCoordinate>()
 
-   fun isStumbled(objC: ObjectCoordinate): Boolean {
+   fun isStumbled(objC: GameObject): Boolean {
       val upLeftHeroX = objC.upLeftX + 1
       val upRightHeroX = objC.upRightX - 1
       val upLeftHeroY = objC.upLeftY + 1
       val downLeftHeroY = objC.downLeftY - 2
-
-      val s = arrayListOf<ObjectCoordinate>()
-      s.addAll(listOfStaticObj)
-      s.addAll(listOfDynamicObj)
-      s.forEach { next ->
+      
+      listOfStaticObj.add(objC)
+      listOfStaticObj.distinct().forEach { next ->
          if (objC != next) {
             if (upRightHeroX in next.upLeftX..next.upRightX && next.upLeftY in upLeftHeroY..downLeftHeroY)
                return true

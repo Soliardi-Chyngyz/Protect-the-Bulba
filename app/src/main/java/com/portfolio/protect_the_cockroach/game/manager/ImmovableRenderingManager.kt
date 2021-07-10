@@ -6,6 +6,7 @@ import com.portfolio.protect_the_cockroach.R
 import com.portfolio.protect_the_cockroach.game.base.BaseManager
 import com.portfolio.protect_the_cockroach.game.immovable.WallObject
 import com.portfolio.protect_the_cockroach.game.model.GameCoordinate
+import com.portfolio.protect_the_cockroach.game.model.GameObject
 import com.portfolio.protect_the_cockroach.game.model.ObjectCoordinate
 
 class ImmovableRenderingManager(
@@ -22,7 +23,7 @@ class ImmovableRenderingManager(
    }
 
    companion object {
-      val list = arrayListOf<ObjectCoordinate>()
+      val list = arrayListOf<GameObject>()
    }
 
    fun draw(canvas: Canvas?) {
@@ -158,8 +159,8 @@ class ImmovableRenderingManager(
    }
 
    private fun WallObject.drawWall(canvas: Canvas?) {
-      val ob1 = ObjectCoordinate(upLeftX, upRightX, upLeftY, downLeftY)
-      list.add(ob1)
+//      val ob1 = ObjectCoordinate(upLeftX, upRightX, upLeftY, downLeftY)
+      list.add(this)
       canvas?.drawBitmap(resizeBitmap, pointStart.x.toFloat(), pointStart.y.toFloat(), Paint())
    }
 }

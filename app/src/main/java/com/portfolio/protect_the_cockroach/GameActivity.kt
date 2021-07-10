@@ -8,6 +8,7 @@ import android.view.WindowManager
 import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import com.portfolio.protect_the_cockroach.game.GameField
+import com.portfolio.protect_the_cockroach.game.manager.SoundPlayerManager
 import kotlin.random.Random
 
 @Suppress("DEPRECATION")
@@ -31,12 +32,27 @@ class GameActivity : AppCompatActivity() {
       }
       window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
-      CDTimers()
+      CDTimerSec()
+
+      CDTimer()
 
       setupUI()
    }
 
-   private fun CDTimers() {
+   private fun CDTimerSec() {
+      val value = Random.nextInt(5)
+      object: CountDownTimer(Random.nextLong(2000, 4000), Random.nextLong(600, 1000)) {
+         override fun onTick(millisUntilFinished: Long) {
+            gameField.getLSecond()?.setOnTickTSec(value)
+         }
+         override fun onFinish() {
+            gameField.getLSecond()?.setOnFinishTimerSec(true)
+            CDTimerSec()
+         }
+      }.start()
+   }
+
+   private fun CDTimer() {
       val value = Random.nextInt(5)
       object: CountDownTimer(Random.nextLong(2000, 4000), Random.nextLong(600, 1000)) {
          override fun onTick(millisUntilFinished: Long) {
@@ -44,7 +60,7 @@ class GameActivity : AppCompatActivity() {
          }
          override fun onFinish() {
             gameField.getListener()?.setOnFinishTimer(true)
-            CDTimers()
+            CDTimer()
          }
       }.start()
    }
