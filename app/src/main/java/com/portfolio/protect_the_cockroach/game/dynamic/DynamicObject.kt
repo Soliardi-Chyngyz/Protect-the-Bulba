@@ -14,13 +14,15 @@ open class DynamicObject(
    heightCell: Double = 0.0,
    resources: Resources? = null,
    @DrawableRes idBitmap: Int = 0,
-   frozen: Boolean = false
+   theirOwn: Boolean = false,
+   frozen: Boolean = false,
 ) : GameObject(
    coordinate,
    widthCell,
    heightCell,
    false,
-   Type.Dynamic
+   Type.Dynamic,
+   theirOwn
 ) {
    var frozen = frozen
    var img = idBitmap

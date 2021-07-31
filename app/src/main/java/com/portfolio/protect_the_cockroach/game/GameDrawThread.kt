@@ -30,6 +30,7 @@ class GameDrawThread(
       DynamicRenderingManager(widthScreen, heightScreen, resources, context, activity, immovableRenderingManager!!, collision)
 
    private var uiEventsManager: UIEventsManager = UIEventsManager(widthScreen, heightScreen)
+   private var isRestart = false
 
    private var surfaceHolder: SurfaceHolder? = surfaceHolder
    private var prevTime: Long = 0
@@ -41,14 +42,17 @@ class GameDrawThread(
       prevTime = System.currentTimeMillis()
    }
 
-   fun removeAll() {
-      immovableRenderingManager!!.removeAll()
+   fun restart() {
+      dynamicRenderingManager?.restart()
+      clearAll()
+   }
+
+   fun clearAll() {
+      immovableRenderingManager!!.clearAll()
       collision.listOfStaticObj.clear()
       collision.listOfDynamicObj.clear()
       collision.collect.clear()
       collision.invasiveCollect.clear()
-      dynamicRenderingManager = null
-      immovableRenderingManager = null
    }
 
    fun pauseThread() {

@@ -15,8 +15,10 @@ class SoundPlayerManager(context: Context) {
    private var middleShot4: MediaPlayer? = null
    private var middleShot5: MediaPlayer? = null
    private var miniDamaged: MediaPlayer? = null
+   private var battleStart: MediaPlayer? = null
 
    private var bonus: MediaPlayer? = null
+   private var pick: MediaPlayer? = null
 
    private var vot_i_vse: MediaPlayer? = null
    private var eto: MediaPlayer? = null
@@ -36,7 +38,18 @@ class SoundPlayerManager(context: Context) {
       vot_i_vse = MediaPlayer.create(context, R.raw.votivse)
       miniDamaged = MediaPlayer.create(context, R.raw.podryvmini)
       bonus = MediaPlayer.create(context, R.raw.bonusmini)
+      battleStart = MediaPlayer.create(context, R.raw.battle_start)
+      pick = MediaPlayer.create(context, R.raw.pick)
    }
+
+   fun playPick() {
+      pick?.start()
+   }
+
+   fun playBattleStart() {
+      battleStart?.start()
+   }
+
    fun playVot() {
       vot_i_vse!!.start()
    }

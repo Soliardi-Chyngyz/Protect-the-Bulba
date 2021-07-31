@@ -17,8 +17,10 @@ class Collision {
       collect.forEach { target ->
          if (bullet.pointCenter.x in target.value.leftX..target.value.rightX &&
             bullet.pointCenter.y in target.value.upY..target.value.downY
-         )
+         ) {
             return if (target.value.invulnerable) {
+               target.value
+            } else if (bullet.theirOwn && target.value.theirOwn) {
                target.value
             } else {
                invasiveCollect[target.key] = target.key
@@ -29,6 +31,7 @@ class Collision {
                collect.remove(target.key)
                target.value
             }
+         }
       }
       return null
    }

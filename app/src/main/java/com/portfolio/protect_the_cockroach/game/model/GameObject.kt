@@ -5,8 +5,11 @@ abstract class GameObject(
     widthCell: Double,
     heightCell: Double,
     invulnerable: Boolean,
-    type: Type
+    type: Type,
+    theirOwn: Boolean,
 ) {
+    var theirOwn: Boolean = theirOwn
+
     var pointCenter: GamePoint = GamePoint()
 
     var leftX: Double

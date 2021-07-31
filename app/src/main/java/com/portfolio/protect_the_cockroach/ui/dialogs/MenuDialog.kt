@@ -3,7 +3,6 @@ package com.portfolio.protect_the_cockroach.ui.dialogs
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
-import android.os.CountDownTimer
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,12 +10,10 @@ import android.view.Window
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.button.MaterialButton
 import com.portfolio.protect_the_cockroach.R
-import com.portfolio.protect_the_cockroach.game.GameField
 import com.portfolio.protect_the_cockroach.game.model.OnClickStatus
-import com.portfolio.protect_the_cockroach.ui.GameActivity
 
 class MenuDialog(
-   val onClick : (OnClickStatus) -> Unit
+   val onClick: (OnClickStatus) -> Unit
 ) : DialogFragment() {
 
    private var resume: MaterialButton? = null
@@ -31,6 +28,8 @@ class MenuDialog(
       if (dialog != null && dialog!!.window != null) {
          dialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
          dialog!!.window!!.requestFeature(Window.FEATURE_NO_TITLE);
+         dialog!!.setCancelable(false)
+         dialog!!.setCanceledOnTouchOutside(false)
       }
       return inflater.inflate(R.layout.fragment_menu, container, false)
    }
@@ -50,14 +49,19 @@ class MenuDialog(
    private fun listeners() {
       resume?.setOnClickListener {
          onClick.invoke(OnClickStatus.RESUME)
-         dialog?.dismiss()
+         dismissFun()
       }
       restart?.setOnClickListener {
          onClick.invoke(OnClickStatus.RESTART)
+         dismissFun()
       }
       exit?.setOnClickListener {
          onClick.invoke(OnClickStatus.EXIT)
-         dialog?.dismiss()
+         dismissFun()
       }
+   }
+
+   private fun dismissFun() {
+      dialog?.dismiss()
    }
 }

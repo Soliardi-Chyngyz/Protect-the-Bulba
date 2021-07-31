@@ -62,7 +62,7 @@ class ImmovableRenderingManager(
       drawBonus(canvas)
    }
 
-   fun removeAll(){
+   fun clearAll(){
       list.clear()
       invasiveColl.clear()
       listOfBonus.clear()
@@ -113,7 +113,6 @@ class ImmovableRenderingManager(
          WallObject(list[3].coordinate, widthCell, heightCell, resources, R.drawable.kirpich).drawWall(canvas, list[3].name)
          WallObject(list[4].coordinate, widthCell, heightCell, resources, R.drawable.kirpich).drawWall(canvas, list[4].name)
          WallObject(list[5].coordinate, widthCell, heightCell, resources, R.drawable.kirpich).drawWall(canvas, list[5].name)
-         Log.i("list5", " list level: $level Coordinate: ${list[5].coordinate.x}, ${list[5].coordinate.y} : ${list[5].name}")
 
          WallObject(list[6].coordinate, widthCell, heightCell, resources, R.drawable.beton,true).drawWall(canvas,list[6].name)
          WallObject(list[7].coordinate, widthCell, heightCell, resources, R.drawable.beton,true).drawWall(canvas,list[7].name)
@@ -129,27 +128,27 @@ class ImmovableRenderingManager(
 
       if (isProtectTheCockroach) {
          p7 = WallObject(GameCoordinate(9, 9), widthCell, heightCell, resources, R.drawable.beton, true)
-         p7?.drawBeton(canvas, "p7")
+         p7?.drawConcrete(canvas, "p7")
          p8 = WallObject(GameCoordinate(11, 9), widthCell, heightCell, resources, R.drawable.beton, true)
-         p8?.drawBeton(canvas, "p8")
+         p8?.drawConcrete(canvas, "p8")
          p9 = WallObject(GameCoordinate(9, 8), widthCell, heightCell, resources, R.drawable.beton, true)
-         p9?.drawBeton(canvas, "p9")
+         p9?.drawConcrete(canvas, "p9")
          p10 = WallObject(GameCoordinate(10, 8), widthCell, heightCell, resources, R.drawable.beton, true)
-         p10?.drawBeton(canvas, "p10")
+         p10?.drawConcrete(canvas, "p10")
          p11 = WallObject(GameCoordinate(11, 8), widthCell, heightCell, resources, R.drawable.beton, true)
-         p11?.drawBeton(canvas, "p11")
+         p11?.drawConcrete(canvas, "p11")
       } else {
          if (isProtectFinished) {
             p7 = WallObject(GameCoordinate(9, 9), widthCell, heightCell, resources, R.drawable.kirpich, false)
-            p7?.drawBeton(canvas, "p7")
+            p7?.drawConcrete(canvas, "p7")
             p8 = WallObject(GameCoordinate(11, 9), widthCell, heightCell, resources, R.drawable.kirpich, false)
-            p8?.drawBeton(canvas, "p8")
+            p8?.drawConcrete(canvas, "p8")
             p9 = WallObject(GameCoordinate(9, 8), widthCell, heightCell, resources, R.drawable.kirpich, false)
-            p9?.drawBeton(canvas, "p9")
+            p9?.drawConcrete(canvas, "p9")
             p10 = WallObject(GameCoordinate(10, 8), widthCell, heightCell, resources, R.drawable.kirpich, false)
-            p10?.drawBeton(canvas, "p10")
+            p10?.drawConcrete(canvas, "p10")
             p11 = WallObject(GameCoordinate(11, 8), widthCell, heightCell, resources, R.drawable.kirpich, false)
-            p11?.drawBeton(canvas, "p11")
+            p11?.drawConcrete(canvas, "p11")
          }
 
          WallObject(GameCoordinate(9, 9), widthCell, heightCell, resources, R.drawable.kirpich).drawWall(canvas, "k7")
@@ -170,7 +169,7 @@ class ImmovableRenderingManager(
       }
    }
 
-   private fun WallObject.drawBeton(canvas: Canvas?, s: String){
+   private fun WallObject.drawConcrete(canvas: Canvas?, s: String){
       val invasive = invasiveColl[s]
       if (s == invasive || isProtectFinished) {
          list.remove(s)

@@ -29,8 +29,12 @@ class GameField @JvmOverloads constructor(
       activity = gameActivity
    }
 
+   fun restartGame() {
+      gameDrawThread!!.restart()
+   }
+
    fun switchOffGame() {
-      gameDrawThread!!.removeAll()
+      gameDrawThread!!.clearAll()
       gameDrawThread!!.interrupt()
       gameDrawThread = null
    }

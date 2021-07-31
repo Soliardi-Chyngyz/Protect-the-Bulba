@@ -8,6 +8,7 @@ import android.graphics.BitmapFactory
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.os.CountDownTimer
+import android.util.Log
 import android.widget.TextView
 import com.portfolio.protect_the_cockroach.R
 import com.portfolio.protect_the_cockroach.`interface`.*
@@ -95,6 +96,7 @@ class DynamicRenderingManager(
          widthCell,
          resources,
          R.drawable.tank_4,
+         true
       )
       locationMap["Tank4"]!!.rotate(180F)
       locationMap["Tank8"] = DynamicObject(
@@ -103,6 +105,7 @@ class DynamicRenderingManager(
          widthCell,
          resources,
          R.drawable.tank_8,
+         true
       )
       locationMap["Tank8"]!!.rotate(180F)
       locationMap["Tank12"] = DynamicObject(
@@ -111,6 +114,7 @@ class DynamicRenderingManager(
          widthCell,
          resources,
          R.drawable.tank_12,
+         true
       )
       locationMap["Tank12"]!!.rotate(180F)
       locationMap["Tank16"] = DynamicObject(
@@ -119,6 +123,7 @@ class DynamicRenderingManager(
          widthCell,
          resources,
          R.drawable.tank_16,
+         true
       )
       locationMap["Tank16"]!!.rotate(180F)
       locationMap["Tank20"] = DynamicObject(
@@ -127,41 +132,42 @@ class DynamicRenderingManager(
          widthCell,
          resources,
          R.drawable.tank_20,
+         true
       )
       locationMap["Tank20"]!!.rotate(180F)
       bullet = DynamicObject(
          GameCoordinate(
             locationMap["Tank4"]!!.pointStart.x.toInt(),
             locationMap["Tank4"]!!.pointStart.y.toInt()
-         ), widthCell / 6, heightCell / 9, resources, R.drawable.bullet
+         ), widthCell / 6, heightCell / 9, resources, R.drawable.bullet, true
       )
 
       bullet2 = DynamicObject(
          GameCoordinate(
             locationMap["Tank8"]!!.pointStart.x.toInt(),
             locationMap["Tank8"]!!.pointStart.y.toInt()
-         ), widthCell / 6, heightCell / 9, resources, R.drawable.bullet
+         ), widthCell / 6, heightCell / 9, resources, R.drawable.bullet, true
       )
 
       bullet3 = DynamicObject(
          GameCoordinate(
             locationMap["Tank12"]!!.pointStart.x.toInt(),
             locationMap["Tank12"]!!.pointStart.y.toInt()
-         ), widthCell / 6, heightCell / 9, resources, R.drawable.bullet
+         ), widthCell / 6, heightCell / 9, resources, R.drawable.bullet, true
       )
 
       bullet4 = DynamicObject(
          GameCoordinate(
             locationMap["Tank16"]!!.pointStart.x.toInt(),
             locationMap["Tank16"]!!.pointStart.y.toInt()
-         ), widthCell / 6, heightCell / 9, resources, R.drawable.bullet
+         ), widthCell / 6, heightCell / 9, resources, R.drawable.bullet, true
       )
 
       bullet5 = DynamicObject(
          GameCoordinate(
             locationMap["Tank20"]!!.pointStart.x.toInt(),
             locationMap["Tank20"]!!.pointStart.y.toInt()
-         ), widthCell / 6, heightCell / 9, resources, R.drawable.bullet
+         ), widthCell / 6, heightCell / 9, resources, R.drawable.bullet, true
       )
 
       bulletHero = DynamicObject(
@@ -197,6 +203,19 @@ class DynamicRenderingManager(
       botsBehavior(canvas, level)
 
       life()
+   }
+
+   fun restart() {
+      locationMap.forEach {
+         it.value.isDestroyed = true
+      }
+      locationHero!!.isDestroyed = true
+      isFire1 = false
+      isFire2 = false
+      isFire3 = false
+      isFire4 = false
+      isFire5 = false
+      isFireHero = false
    }
 
    private fun life() {
@@ -251,24 +270,27 @@ class DynamicRenderingManager(
 
             if (hit != null) {
                if (!hit.invulnerable) {
-                  sound?.playMiniDamaged()
-                  val mBitmap = BitmapFactory.decodeResource(resources, R.drawable.explosion)
-                  val resizeBitmap =
-                     Bitmap.createScaledBitmap(
-                        mBitmap,
-                        widthCell.toInt(),
-                        heightCell.toInt(),
-                        false
+                  if (tank.theirOwn && hit.theirOwn) {
+                     sound?.playPick()
+                  } else {
+                     sound?.playMiniDamaged()
+                     val mBitmap = BitmapFactory.decodeResource(resources, R.drawable.explosion)
+                     val resizeBitmap =
+                        Bitmap.createScaledBitmap(
+                           mBitmap,
+                           widthCell.toInt(),
+                           heightCell.toInt(),
+                           false
+                        )
+                     canvas.drawBitmap(
+                        resizeBitmap,
+                        hit.pointStart.x.toFloat(),
+                        hit.pointStart.y.toFloat(),
+                        paint
                      )
-                  canvas.drawBitmap(
-                     resizeBitmap,
-                     hit.pointStart.x.toFloat(),
-                     hit.pointStart.y.toFloat(),
-                     paint
-                  )
+                     funOnWhen(hit)
+                  }
                }
-
-               funOnWhen(hit)
 
                when (tank) {
                   locationMap["Tank4"] -> {
@@ -565,13 +587,13 @@ class DynamicRenderingManager(
                dynamicObject.pointStart.y.toFloat(),
                paint
             )
-
             dynamicObject.pointStart.x =
                kotlin.math.floor(Math.random() * (widthScreen - widthCell))
             dynamicObject.pointStart.y = 0.0
          }
          invasiveColl.remove(s)
          collision.invasiveCollect.remove(s)
+         Log.i("ololo", "drawAndCollision: HIT")
       }
 
       dynamicObject.leftX = dynamicObject.pointStart.x
@@ -648,8 +670,8 @@ class DynamicRenderingManager(
                   }
                }
                "life" -> {
-                  if(coundDown in 1..2)
-                     coundDown ++
+                  if (coundDown in 1..2)
+                     coundDown++
                }
                "lopata" -> {
                   immovableRenderingManager.protectCockroach(true)
@@ -701,6 +723,7 @@ class DynamicRenderingManager(
                locationMap["Tank20"]!!.isDestroyed = true
             }
          }
+         Log.i("ololo", "drawAndCollision: Invasive $invasive")
       } else {
          canvas?.drawBitmap(
             bMap,

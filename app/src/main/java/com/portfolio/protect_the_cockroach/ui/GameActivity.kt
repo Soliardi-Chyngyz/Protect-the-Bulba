@@ -124,22 +124,26 @@ class GameActivity : AppCompatActivity() {
       MenuDialog { status ->
          when (status) {
             OnClickStatus.RESUME -> {
-               onResumeCDT()
-               gameField.unPause()
-               isStarted = false
-               CDTimerGame(milliLeft)
+               onResumeFun()
             }
             OnClickStatus.RESTART -> {
-               val intent = Intent(this, GameActivity::class.java)
-               intent.putExtra(Constants.KEY_LEVEL, level)
-               startActivity(intent)
-               finish()
+               milliLeft = 120000
+               onResumeFun()
+               gameField.restartGame()
+               sound?.playBattleStart()
             }
             OnClickStatus.EXIT -> {
                this.onBackPressed()
             }
          }
       }.show(supportFragmentManager, "MenuDialog")
+   }
+
+   private fun onResumeFun() {
+      onResumeCDT()
+      gameField.unPause()
+      isStarted = false
+      CDTimerGame(milliLeft)
    }
 
    private fun onResumeCDT() {

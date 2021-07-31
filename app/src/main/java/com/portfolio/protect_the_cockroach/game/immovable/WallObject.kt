@@ -20,7 +20,8 @@ class WallObject(
    widthCell,
    heightCell,
    invulnerable,
-   Type.Static
+   Type.Static,
+   false
 ) {
 
    val bonusName = bonusName
