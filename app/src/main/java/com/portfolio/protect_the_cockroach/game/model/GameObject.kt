@@ -4,13 +4,15 @@ abstract class GameObject(
     coordinate: GameCoordinate?,
     widthCell: Double,
     heightCell: Double,
+    invulnerable: Boolean,
+    type: Type
 ) {
     var pointCenter: GamePoint = GamePoint()
 
-    var upLeftX: Double
-    var upRightX: Double
-    var upLeftY: Double
-    var downLeftY: Double
+    var leftX: Double
+    var rightX: Double
+    var upY: Double
+    var downY: Double
 
     var pointStart: GamePoint = GamePoint()
     var pointEnd: GamePoint = GamePoint()
@@ -18,16 +20,25 @@ abstract class GameObject(
     var widthCell: Double = widthCell
     var heightCell: Double = heightCell
 
-    init {
-        pointCenter = GamePoint((widthCell * coordinate!!.x) - (widthCell / 2), (heightCell * coordinate.y) - (heightCell / 2))
+    var isDestroyed = false
+    var invulnerable = invulnerable
+    var type: Type? = type
 
-        upLeftX = widthCell * coordinate.x - widthCell
-        upRightX = widthCell * coordinate.x
-        upLeftY = heightCell * coordinate.y - heightCell
-        downLeftY = heightCell * coordinate.y
+    init {
+        pointCenter = GamePoint(coordinate!!.x + widthCell / 2, coordinate.y - (heightCell / 2))
+
+        leftX = widthCell * coordinate.x - widthCell
+        rightX = widthCell * coordinate.x
+        upY = heightCell * coordinate.y - heightCell
+        downY = heightCell * coordinate.y
 
         pointStart = GamePoint((widthCell * coordinate.x) - (widthCell), (heightCell * coordinate.y) - (heightCell))
         pointEnd = GamePoint((widthCell * coordinate.x), (heightCell * coordinate.y))
+    }
+
+    enum class Type {
+        Dynamic,
+        Static
     }
 }
 

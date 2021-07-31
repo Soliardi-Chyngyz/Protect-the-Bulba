@@ -47,5 +47,21 @@
         <item name="layout_constraintBottom_toBottomOf">parent</item>
         <item name="android:src">@drawable/ic_fire</item>
     </style>
+    <style name="BtnStyle">
+        <item name="android:textColor">@color/black</item>
+        <item name="backgroundTint">@color/white</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="cornerRadius">20dp</item>
+    </style>
+
+    <style name="MyCustomTheme" parent="@android:style/Theme.Panel">
+        <item name="android:windowAnimationStyle">@style/MyAnimation.Window</item>
+    </style>
+
+    <style name="MyAnimation.Window" parent="@android:style/Animation.Activity">
+        <item name="android:windowEnterAnimation">@anim/anim_in</item>
+        <item name="android:windowExitAnimation">@anim/anim_out</item>
+    </style>
 
 </resources>

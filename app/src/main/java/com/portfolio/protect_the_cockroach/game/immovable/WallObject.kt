@@ -12,21 +12,19 @@ class WallObject(
    widthCell: Double,
    heightCell: Double,
    resources: Resources,
-   @DrawableRes idBitmap: Int
+   @DrawableRes idBitmap: Int,
+   invulnerable: Boolean = false,
+   bonusName: String = ""
 ) : GameObject(
    coordinate,
    widthCell,
    heightCell,
+   invulnerable,
+   Type.Static
 ) {
 
-   var type: Type? = null
-
+   val bonusName = bonusName
    val bitmap = BitmapFactory.decodeResource(resources, idBitmap)
    val resizeBitmap =
       Bitmap.createScaledBitmap(bitmap, widthCell.toInt(), heightCell.toInt(), false)!!
-
-   enum class Type {
-      Vulnerable,
-      Invulnerable
-   }
 }

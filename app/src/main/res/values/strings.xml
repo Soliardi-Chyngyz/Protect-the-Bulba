@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">Protect-the-Cockroach</string>
+    <string name="start">Start</string>
+    <string name="about_game">About game</string>
+    <string name="info">Hello everyone, I wrote this game based on the good old Battle City 1990 game, many things in the game can be different, such as sounds, game rules, mechanics.</string>
+    <string name="pause">Pause</string>
+    <string name="resume">Resume</string>
+    <string name="restart">Restart</string>
+    <string name="exit">exit</string>
+    <string name="score_0">Score: 0</string>
+    <string name="congratulations">Сongratulations</string>
+    <string name="next">next</string>
+    <string name="menu">Menu</string>
 </resources>
