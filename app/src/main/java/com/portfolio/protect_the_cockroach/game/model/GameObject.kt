@@ -2,13 +2,12 @@ package com.portfolio.protect_the_cockroach.game.model
 
 abstract class GameObject(
     coordinate: GameCoordinate?,
-    widthCell: Double,
-    heightCell: Double,
-    invulnerable: Boolean,
+    var widthCell: Double,
+    var heightCell: Double,
+    var invulnerable: Boolean,
     type: Type,
-    theirOwn: Boolean,
+    var theirOwn: Boolean,
 ) {
-    var theirOwn: Boolean = theirOwn
 
     var pointCenter: GamePoint = GamePoint()
 
@@ -20,11 +19,7 @@ abstract class GameObject(
     var pointStart: GamePoint = GamePoint()
     var pointEnd: GamePoint = GamePoint()
 
-    var widthCell: Double = widthCell
-    var heightCell: Double = heightCell
-
     var isDestroyed = false
-    var invulnerable = invulnerable
     var type: Type? = type
 
     init {

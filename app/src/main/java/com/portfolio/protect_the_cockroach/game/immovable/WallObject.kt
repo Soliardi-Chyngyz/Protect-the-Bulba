@@ -14,7 +14,7 @@ class WallObject(
    resources: Resources,
    @DrawableRes idBitmap: Int,
    invulnerable: Boolean = false,
-   bonusName: String = ""
+   val bonusName: String = ""
 ) : GameObject(
    coordinate,
    widthCell,
@@ -24,8 +24,7 @@ class WallObject(
    false
 ) {
 
-   val bonusName = bonusName
-   val bitmap = BitmapFactory.decodeResource(resources, idBitmap)
+   private val bitmap: Bitmap = BitmapFactory.decodeResource(resources, idBitmap)
    val resizeBitmap =
       Bitmap.createScaledBitmap(bitmap, widthCell.toInt(), heightCell.toInt(), false)!!
 }

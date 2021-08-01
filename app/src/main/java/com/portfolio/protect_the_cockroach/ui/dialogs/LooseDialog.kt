@@ -1,6 +1,5 @@
 package com.portfolio.protect_the_cockroach.ui.dialogs
 
-import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -8,23 +7,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.TextView
 import androidx.fragment.app.DialogFragment
 import com.google.android.material.button.MaterialButton
 import com.portfolio.protect_the_cockroach.R
 import com.portfolio.protect_the_cockroach.game.model.OnClickStatus
 
-class VictoryDialog(
-   private val score: Int?,
+class LooseDialog(
    private val onClick: (OnClickStatus) -> Unit
-) : DialogFragment() {
+) : DialogFragment(){
 
    private val menu: MaterialButton by lazy {
-      return@lazy this.requireView().findViewById(R.id.v_menu)
+      return@lazy this.requireView().findViewById(R.id.l_menu)
    }
 
-   private val next: MaterialButton by lazy {
-      return@lazy this.requireView().findViewById(R.id.next)
+   private val restart: MaterialButton by lazy {
+      return@lazy this.requireView().findViewById(R.id.l_restart)
    }
 
    override fun onCreateView(
@@ -39,14 +36,11 @@ class VictoryDialog(
          dialog!!.setCancelable(false)
          dialog!!.setCanceledOnTouchOutside(false)
       }
-      return inflater.inflate(R.layout.fragment_victory, container, false)
+      return inflater.inflate(R.layout.fragment_loose, container, false)
    }
 
-   @SuppressLint("SetTextI18n")
    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
       super.onViewCreated(view, savedInstanceState)
-
-      view.findViewById<TextView>(R.id.v_score).text = "You scored $score points per level"
 
       listeners()
    }
@@ -54,10 +48,12 @@ class VictoryDialog(
    private fun listeners() {
       menu.setOnClickListener {
          onClick.invoke(OnClickStatus.MENU)
+         dialog?.dismiss()
       }
 
-      next.setOnClickListener {
-         onClick.invoke(OnClickStatus.NEXT)
+      restart.setOnClickListener {
+         onClick.invoke(OnClickStatus.RESTART)
+         dialog?.dismiss()
       }
    }
 }

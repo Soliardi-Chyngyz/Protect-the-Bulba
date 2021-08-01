@@ -3,7 +3,6 @@ package com.portfolio.protect_the_cockroach.ui
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.*
-import android.util.Log
 import android.view.MotionEvent
 import android.view.WindowInsets
 import android.view.WindowManager
@@ -15,7 +14,7 @@ import com.portfolio.protect_the_cockroach.game.GameField
 import com.portfolio.protect_the_cockroach.game.constants.Constants
 import com.portfolio.protect_the_cockroach.game.manager.SoundPlayerManager
 import com.portfolio.protect_the_cockroach.game.model.OnClickStatus
-import com.portfolio.protect_the_cockroach.game.model.OnClickVictoryDialog
+import com.portfolio.protect_the_cockroach.ui.dialogs.LooseDialog
 import com.portfolio.protect_the_cockroach.ui.dialogs.MenuDialog
 import com.portfolio.protect_the_cockroach.ui.dialogs.VictoryDialog
 import java.text.SimpleDateFormat
@@ -25,7 +24,7 @@ import kotlin.random.Random
 @Suppress("DEPRECATION")
 class GameActivity : AppCompatActivity() {
 
-   private val gameField: GameField by lazy {
+   val gameField: GameField by lazy {
       return@lazy this.findViewById<GameField>(R.id.game_field)
    }
    private val timerView: TextView by lazy {
@@ -93,6 +92,10 @@ class GameActivity : AppCompatActivity() {
       }
    }
 
+   fun setMilliLeft(v: Long) {
+      milliLeft = v
+   }
+
    fun setScore(v: Int) {
       score = v
    }
@@ -117,10 +120,34 @@ class GameActivity : AppCompatActivity() {
       }
    }
 
-   private fun onPauseFun() {
+   fun onPauseLocal() {
       onPauseCDT()
       gameField.pauseGame()
       timerClock?.cancel()
+   }
+
+   fun gameOver() {
+      LooseDialog { status ->
+         when (status) {
+            OnClickStatus.MENU -> {
+               gameField.switchOffGame()
+               intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY;
+               this@GameActivity.finish()
+            }
+            OnClickStatus.RESTART -> {
+               milliLeft = 120000
+               onResumeFun()
+               score = 0
+               gameField.restartGame()
+               sound?.playBattleStart()
+            }
+            else -> (throw IllegalStateException("Invalid rating param value"))
+         }
+      }.show(supportFragmentManager, "LoosingDialog")
+   }
+
+   private fun onPauseFun() {
+      onPauseLocal()
       MenuDialog { status ->
          when (status) {
             OnClickStatus.RESUME -> {
@@ -129,12 +156,14 @@ class GameActivity : AppCompatActivity() {
             OnClickStatus.RESTART -> {
                milliLeft = 120000
                onResumeFun()
+               score = 0
                gameField.restartGame()
                sound?.playBattleStart()
             }
             OnClickStatus.EXIT -> {
                this.onBackPressed()
             }
+            else -> (throw IllegalStateException("Invalid rating param value"))
          }
       }.show(supportFragmentManager, "MenuDialog")
    }
@@ -275,12 +304,12 @@ class GameActivity : AppCompatActivity() {
                gameField.pauseGame()
                VictoryDialog(score) { status ->
                   when (status) {
-                     OnClickVictoryDialog.MENU -> {
+                     OnClickStatus.MENU -> {
                         gameField.switchOffGame()
                         intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY;
                         this@GameActivity.finish()
                      }
-                     OnClickVictoryDialog.NEXT -> {
+                     OnClickStatus.NEXT -> {
                         if (level != 0) {
                            gameField.switchOffGame()
                            val intent = Intent(this@GameActivity, GameActivity::class.java)
@@ -290,6 +319,7 @@ class GameActivity : AppCompatActivity() {
                            this@GameActivity.finish()
                         }
                      }
+                     else -> (throw IllegalStateException("Invalid rating param value"))
                   }
                }.show(supportFragmentManager, "VictoryDialog")
             }
@@ -333,7 +363,7 @@ class GameActivity : AppCompatActivity() {
 
    override fun onPause() {
       super.onPause()
-      onPauseCDT()
+      onPauseCDT() // все count down timer cancel
       gameField.pauseGame()
       timerClock?.cancel()
    }

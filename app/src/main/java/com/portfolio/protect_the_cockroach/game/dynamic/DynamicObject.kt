@@ -15,7 +15,7 @@ open class DynamicObject(
    resources: Resources? = null,
    @DrawableRes idBitmap: Int = 0,
    theirOwn: Boolean = false,
-   frozen: Boolean = false,
+   var frozen: Boolean = false,
 ) : GameObject(
    coordinate,
    widthCell,
@@ -24,7 +24,6 @@ open class DynamicObject(
    Type.Dynamic,
    theirOwn
 ) {
-   var frozen = frozen
    var img = idBitmap
    var rotatedBitmap: Bitmap? = null
    var rotation: Float = 0f

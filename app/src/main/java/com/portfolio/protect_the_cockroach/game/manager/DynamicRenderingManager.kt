@@ -78,8 +78,12 @@ class DynamicRenderingManager(
    private var life2: DynamicObject? = null
    private var life3: DynamicObject? = null
 
-   private var coundDown = 3
+   private var countDown = 3
    private var score = 0
+
+   // GameOver
+   private var isRestart = false
+
    // endregion
 
    init {
@@ -126,6 +130,7 @@ class DynamicRenderingManager(
          true
       )
       locationMap["Tank16"]!!.rotate(180F)
+
       locationMap["Tank20"] = DynamicObject(
          GameCoordinate(20, 1),
          widthCell,
@@ -135,6 +140,15 @@ class DynamicRenderingManager(
          true
       )
       locationMap["Tank20"]!!.rotate(180F)
+
+      locationCockroach = DynamicObject(
+         GameCoordinate(10, 9),
+         widthCell,
+         heightCell,
+         resources,
+         R.drawable.cocroach,
+      )
+
       bullet = DynamicObject(
          GameCoordinate(
             locationMap["Tank4"]!!.pointStart.x.toInt(),
@@ -206,20 +220,15 @@ class DynamicRenderingManager(
    }
 
    fun restart() {
+      isRestart = true
       locationMap.forEach {
          it.value.isDestroyed = true
       }
       locationHero!!.isDestroyed = true
-      isFire1 = false
-      isFire2 = false
-      isFire3 = false
-      isFire4 = false
-      isFire5 = false
-      isFireHero = false
    }
 
    private fun life() {
-      when (coundDown) {
+      when (countDown) {
          3 -> {
             life1?.drawLife()
             life2?.drawLife()
@@ -232,10 +241,12 @@ class DynamicRenderingManager(
          1 -> {
             life1?.drawLife()
          }
-         0 -> {
-            11
-         }
       }
+   }
+
+   private fun gameOver() {
+      activity.onPauseLocal()
+      activity.gameOver()
    }
 
    @SuppressLint("UseCompatLoadingForDrawables")
@@ -250,72 +261,74 @@ class DynamicRenderingManager(
       rotation: Float,
       isFire: Boolean
    ) {
-      if (!tank!!.frozen) {
-         if (isFire) {
-            var speedBullet = 30
-            when (tank) {
-               locationHero -> {
-                  speedBullet = speedHeroBullet
-               }
-            }
-            when (rotation) {
-               0F -> bullet!!.pointCenter.y -= speedBullet
-               90F -> bullet!!.pointCenter.x += speedBullet
-               -90F -> bullet!!.pointCenter.x -= speedBullet
-               180F -> bullet!!.pointCenter.y += speedBullet
-            }
-            bullet!!.rotate(rotation)
-
-            val hit = collision.isHit(bullet)
-
-            if (hit != null) {
-               if (!hit.invulnerable) {
-                  if (tank.theirOwn && hit.theirOwn) {
-                     sound?.playPick()
-                  } else {
-                     sound?.playMiniDamaged()
-                     val mBitmap = BitmapFactory.decodeResource(resources, R.drawable.explosion)
-                     val resizeBitmap =
-                        Bitmap.createScaledBitmap(
-                           mBitmap,
-                           widthCell.toInt(),
-                           heightCell.toInt(),
-                           false
-                        )
-                     canvas.drawBitmap(
-                        resizeBitmap,
-                        hit.pointStart.x.toFloat(),
-                        hit.pointStart.y.toFloat(),
-                        paint
-                     )
-                     funOnWhen(hit)
-                  }
-               }
-
+      if (bullet != null) {
+         if (!tank!!.frozen) {
+            if (isFire) {
+               var speedBullet = 30
                when (tank) {
-                  locationMap["Tank4"] -> {
-                     isFire1 = false
-                  }
-                  locationMap["Tank8"] -> {
-                     isFire2 = false
-                  }
-                  locationMap["Tank12"] -> isFire3 = false
-                  locationMap["Tank16"] -> isFire4 = false
-                  locationMap["Tank20"] -> isFire5 = false
                   locationHero -> {
-                     isFireHero = false
-                     if (hit.type == GameObject.Type.Dynamic) {
-                        score += 100
-                        val text = activity.findViewById<TextView>(R.id.score)
-                        activity.runOnUiThread {
-                           text.text = "Score: $score"
-                        }
-                        activity.setScore(score)
+                     speedBullet = speedHeroBullet
+                  }
+               }
+               when (rotation) {
+                  0F -> bullet.pointCenter.y -= speedBullet
+                  90F -> bullet.pointCenter.x += speedBullet
+                  -90F -> bullet.pointCenter.x -= speedBullet
+                  180F -> bullet.pointCenter.y += speedBullet
+               }
+               bullet.rotate(rotation)
+
+               val hit = collision.isHit(bullet)
+
+               if (hit != null) {
+                  if (!hit.invulnerable) {
+                     if (tank.theirOwn && hit.theirOwn) {
+                        sound?.playPick()
+                     } else {
+                        sound?.playMiniDamaged()
+                        val mBitmap = BitmapFactory.decodeResource(resources, R.drawable.explosion)
+                        val resizeBitmap =
+                           Bitmap.createScaledBitmap(
+                              mBitmap,
+                              widthCell.toInt(),
+                              heightCell.toInt(),
+                              false
+                           )
+                        canvas.drawBitmap(
+                           resizeBitmap,
+                           hit.pointStart.x.toFloat(),
+                           hit.pointStart.y.toFloat(),
+                           paint
+                        )
+                        funOnWhen(hit)
                      }
                   }
+
+                  when (tank) {
+                     locationMap["Tank4"] -> {
+                        isFire1 = false
+                     }
+                     locationMap["Tank8"] -> {
+                        isFire2 = false
+                     }
+                     locationMap["Tank12"] -> isFire3 = false
+                     locationMap["Tank16"] -> isFire4 = false
+                     locationMap["Tank20"] -> isFire5 = false
+                     locationHero -> {
+                        isFireHero = false
+                        if (hit.type == GameObject.Type.Dynamic) {
+                           score += 100
+                           val text = activity.findViewById<TextView>(R.id.score)
+                           activity.runOnUiThread {
+                              text.text = "Score: $score"
+                           }
+                           activity.setScore(score)
+                        }
+                     }
+                  }
+               } else {
+                  bullet.drawBullet()
                }
-            } else {
-               bullet.drawBullet()
             }
          }
       }
@@ -348,26 +361,27 @@ class DynamicRenderingManager(
             locationMap["Tank20"]!!.isDestroyed = false
          }
          locationCockroach -> {
+            locationCockroach!!.isDestroyed = false
             sound?.playVot()
          }
       }
    }
 
    private fun botsBehavior(canvas: Canvas?, level: Int) {
-      randomGenerator(canvas, locationMap["Tank4"], randomValue1, isFire1, "Tank4")
-      randomGenerator(canvas, locationMap["Tank8"], randomValue2, isFire2, "Tank8")
-      randomGenerator(canvas, locationMap["Tank12"], randomValue3, isFire3, "Tank12")
+      randomGenerator(canvas, locationMap["Tank4"], randomValue1, "Tank4")
+      randomGenerator(canvas, locationMap["Tank8"], randomValue2, "Tank8")
+      randomGenerator(canvas, locationMap["Tank12"], randomValue3, "Tank12")
       bulletStartPosition(bullet, locationMap["Tank4"], rotation1, isFire1)
       bulletStartPosition(bullet2, locationMap["Tank8"], rotation2, isFire2)
       bulletStartPosition(bullet3, locationMap["Tank12"], rotation3, isFire3)
       when {
          level in 4..6 -> {
-            randomGenerator(canvas, locationMap["Tank16"], randomValue4, isFire4, "Tank16")
+            randomGenerator(canvas, locationMap["Tank16"], randomValue4, "Tank16")
             bulletStartPosition(bullet4, locationMap["Tank16"], rotation4, isFire4)
          }
          level >= 7 -> {
-            randomGenerator(canvas, locationMap["Tank16"], randomValue4, isFire4, "Tank16")
-            randomGenerator(canvas, locationMap["Tank20"], randomValue5, isFire5, "Tank20")
+            randomGenerator(canvas, locationMap["Tank16"], randomValue4, "Tank16")
+            randomGenerator(canvas, locationMap["Tank20"], randomValue5, "Tank20")
             bulletStartPosition(bullet4, locationMap["Tank16"], rotation4, isFire4)
             bulletStartPosition(bullet5, locationMap["Tank20"], rotation5, isFire5)
          }
@@ -376,13 +390,6 @@ class DynamicRenderingManager(
    }
 
    private fun cockroachBehavior(canvas: Canvas?) {
-      locationCockroach = DynamicObject(
-         GameCoordinate(10, 9),
-         widthCell,
-         heightCell,
-         resources,
-         R.drawable.cocroach,
-      )
       val lastLocX = locationCockroach!!.pointStart.x
       val lastLocY = locationCockroach!!.pointStart.y
 
@@ -423,52 +430,49 @@ class DynamicRenderingManager(
          }
       }
 
-      locationCockroach!!.drawAndCollision(
+      locationCockroach?.drawAndCollision(
          canvas, "cockroach",
-         locationCockroach!!, lastLocX, lastLocY, true
+         locationCockroach!!, lastLocX, lastLocY
       )
    }
 
    private fun heroBehavior(canvas: Canvas?) {
-      val lastLocX = locationHero!!.pointStart.x
-      val lastLocY = locationHero!!.pointStart.y
+      locationHero?.let {
+         val lastLocX = locationHero!!.pointStart.x
+         val lastLocY = locationHero!!.pointStart.y
 
-      typeMove?.let {
-         when (typeMove) {
-            GameField.TypeMove.UP -> {
-               locationHero!!.pointStart.y -= 15
-               locationHero?.rotate(0F)
+         typeMove?.let {
+            when (typeMove) {
+               GameField.TypeMove.UP -> {
+                  locationHero!!.pointStart.y -= 15
+                  locationHero?.rotate(0F)
+               }
+               GameField.TypeMove.DOWN -> {
+                  locationHero!!.pointStart.y += 15
+                  locationHero?.rotate(180F)
+               }
+               GameField.TypeMove.LEFT -> {
+                  locationHero!!.pointStart.x -= 15
+                  locationHero?.rotate(-90F)
+               }
+               GameField.TypeMove.RIGHT -> {
+                  locationHero!!.pointStart.x += 15
+                  locationHero?.rotate(90F)
+               }
+               else -> (throw IllegalStateException("Invalid rating param value"))
             }
-            GameField.TypeMove.DOWN -> {
-               locationHero!!.pointStart.y += 15
-               locationHero?.rotate(180F)
-            }
-            GameField.TypeMove.LEFT -> {
-               locationHero!!.pointStart.x -= 15
-               locationHero?.rotate(-90F)
-            }
-            GameField.TypeMove.RIGHT -> {
-               locationHero!!.pointStart.x += 15
-               locationHero?.rotate(90F)
-            }
-            else -> (throw IllegalStateException("Invalid rating param value"))
          }
+         locationHero?.drawAndCollision(
+            canvas, "mainHero",
+            locationHero!!, lastLocX, lastLocY
+         )
       }
-      locationHero?.drawAndCollision(
-         canvas,
-         "mainHero",
-         locationHero!!,
-         lastLocX,
-         lastLocY,
-         isFireHero
-      )
    }
 
    private fun randomGenerator(
       canvas: Canvas?,
       dynamicObject: DynamicObject?,
       randomValue: Int,
-      isFire: Boolean,
       string: String
    ) {
       val lastLocX = dynamicObject!!.pointStart.x
@@ -516,8 +520,7 @@ class DynamicRenderingManager(
             canvas,
             string,
             it,
-            lastLocX, lastLocY,
-            isFire
+            lastLocX, lastLocY
          )
       }
    }
@@ -539,61 +542,78 @@ class DynamicRenderingManager(
       dynamicObject: DynamicObject,
       lastLocX: Double,
       lastLocY: Double,
-      isFire: Boolean
    ) {
       if (dynamicObject.isDestroyed) {
          when (s) {
             "mainHero" -> {
-               isFireHero = true
                locationHero!!.isDestroyed = false
+               if (!isRestart)
+                  isFireHero = true
             }
             "Tank4" -> {
-               isFire1 = true
+               if (!isRestart)
+                  isFire1 = true
                locationMap["Tank4"]!!.isDestroyed = false
             }
             "Tank8" -> {
-               isFire2 = true
+               if (!isRestart)
+                  isFire2 = true
                locationMap["Tank8"]!!.isDestroyed = false
             }
             "Tank12" -> {
-               isFire3 = true
+               if (!isRestart)
+                  isFire3 = true
                locationMap["Tank12"]!!.isDestroyed = false
             }
             "Tank16" -> {
-               isFire4 = true
+               if (!isRestart)
+                  isFire4 = true
                locationMap["Tank16"]!!.isDestroyed = false
             }
             "Tank20" -> {
-               isFire5 = true
+               if (!isRestart)
+                  isFire5 = true
                locationMap["Tank20"]!!.isDestroyed = false
             }
+            "cockroach" -> {
+               locationCockroach!!.isDestroyed = false
+            }
          }
-         if (s == "mainHero") {
-            locationHero!!.pointStart.x = widthCell * 8 - widthCell
-            locationHero!!.pointStart.y = heightCell * 9 - heightCell
-         } else {
-            sound?.playDamaged()
-            val mBitmap = BitmapFactory.decodeResource(resources, R.drawable.explosion)
-            val resizeBitmap =
-               Bitmap.createScaledBitmap(
-                  mBitmap,
-                  widthCell.toInt(),
-                  heightCell.toInt(),
-                  false
+         isRestart = false
+         when (s) {
+            "mainHero" -> {
+               locationHero!!.pointStart.x = widthCell * 8 - widthCell
+               locationHero!!.pointStart.y = heightCell * 9 - heightCell
+            }
+            "cockroach" -> {
+               locationCockroach!!.pointStart.x = widthCell * 10 - widthCell
+               locationCockroach!!.pointStart.y = heightCell * 9 - heightCell
+            }
+            else -> {
+               sound?.playDamaged()
+               if (s == "cockroach")
+                  Log.i("cockIsDead", "drawAndCollision: ")
+               val mBitmap = BitmapFactory.decodeResource(resources, R.drawable.explosion)
+               val resizeBitmap =
+                  Bitmap.createScaledBitmap(
+                     mBitmap,
+                     widthCell.toInt(),
+                     heightCell.toInt(),
+                     false
+                  )
+               canvas?.drawBitmap(
+                  resizeBitmap,
+                  dynamicObject.pointStart.x.toFloat(),
+                  dynamicObject.pointStart.y.toFloat(),
+                  paint
                )
-            canvas?.drawBitmap(
-               resizeBitmap,
-               dynamicObject.pointStart.x.toFloat(),
-               dynamicObject.pointStart.y.toFloat(),
-               paint
-            )
-            dynamicObject.pointStart.x =
-               kotlin.math.floor(Math.random() * (widthScreen - widthCell))
-            dynamicObject.pointStart.y = 0.0
+               dynamicObject.pointStart.x =
+                  kotlin.math.floor(Math.random() * (widthScreen - widthCell))
+               dynamicObject.pointStart.y = 0.0
+            }
          }
          invasiveColl.remove(s)
          collision.invasiveCollect.remove(s)
-         Log.i("ololo", "drawAndCollision: HIT")
       }
 
       dynamicObject.leftX = dynamicObject.pointStart.x
@@ -670,10 +690,10 @@ class DynamicRenderingManager(
                   }
                }
                "life" -> {
-                  if (coundDown in 1..2)
-                     coundDown++
+                  if (countDown in 1..2)
+                     countDown++
                }
-               "lopata" -> {
+               "protect" -> {
                   immovableRenderingManager.protectCockroach(true)
                }
                "star" -> {
@@ -694,13 +714,18 @@ class DynamicRenderingManager(
       if (s == invasive) {
          when (s) {
             "cockroach" -> {
-
+               locationCockroach!!.isDestroyed = true
+               gameOver()
             }
             "mainHero" -> {
                isFireHero = false
                locationHero!!.isDestroyed = true
-               coundDown--
+               countDown--
                speedHeroBullet = 30
+               if (countDown == 0) {
+                  locationHero = null
+                  bulletHero = null
+               }
             }
             "Tank4" -> {
                isFire1 = false
@@ -723,7 +748,6 @@ class DynamicRenderingManager(
                locationMap["Tank20"]!!.isDestroyed = true
             }
          }
-         Log.i("ololo", "drawAndCollision: Invasive $invasive")
       } else {
          canvas?.drawBitmap(
             bMap,
@@ -820,12 +844,14 @@ class DynamicRenderingManager(
 
    // ------------ ^_^ -----------  MainHero
    override fun onClick(value: Boolean) {
-      isFireHero = value
-      rotationHero = locationHero!!.rotation
-      val accuratePosition =
-         AccuratePosition.calculating(rotationHero, locationHero, widthCell, heightCell)
-      bulletHero!!.pointCenter.x = accuratePosition.x
-      bulletHero!!.pointCenter.y = accuratePosition.y
+      locationHero?.let {
+         isFireHero = value
+         rotationHero = locationHero!!.rotation
+         val accuratePosition =
+            AccuratePosition.calculating(rotationHero, locationHero, widthCell, heightCell)
+         bulletHero!!.pointCenter.x = accuratePosition.x
+         bulletHero!!.pointCenter.y = accuratePosition.y
+      }
    }
-   // endregion
+// endregion
 }

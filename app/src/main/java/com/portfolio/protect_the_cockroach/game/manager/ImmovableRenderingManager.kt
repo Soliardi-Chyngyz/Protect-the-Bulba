@@ -3,7 +3,6 @@ package com.portfolio.protect_the_cockroach.game.manager
 import android.content.res.Resources
 import android.graphics.*
 import android.os.CountDownTimer
-import android.util.Log
 import com.portfolio.protect_the_cockroach.R
 import com.portfolio.protect_the_cockroach.`interface`.OnBonusTimerListener
 import com.portfolio.protect_the_cockroach.game.base.BaseManager
@@ -21,7 +20,7 @@ class ImmovableRenderingManager(
    heightScreen: Double,
    var resources: Resources,
    private val activity: GameActivity,
-   val collision: Collision
+   private val collision: Collision
 ) : BaseManager(widthScreen, heightScreen), OnBonusTimerListener {
 
    private val tableLinePaint: Paint = run {
@@ -240,7 +239,7 @@ class ImmovableRenderingManager(
                }
                4 -> {
                   drawable = R.drawable.lopata
-                  bonusName = "lopata"
+                  bonusName = "protect"
                }
                5 -> {
                   drawable = R.drawable.star

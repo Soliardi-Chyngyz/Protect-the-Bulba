@@ -11,4 +11,6 @@
     <string name="congratulations">Сongratulations</string>
     <string name="next">next</string>
     <string name="menu">Menu</string>
+    <string name="war">Война - это когда правительство говорит тебе, кто плохой парень. Революция - когда ты решаешь это сам.</string>
+    <string name="loosing">The battle is lost</string>
 </resources>
