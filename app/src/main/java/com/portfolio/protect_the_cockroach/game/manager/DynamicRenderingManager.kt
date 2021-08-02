@@ -225,6 +225,16 @@ class DynamicRenderingManager(
          it.value.isDestroyed = true
       }
       locationHero!!.isDestroyed = true
+      setFalse()
+   }
+
+   private fun setFalse() {
+      isFireHero = false
+      isFire5 = false
+      isFire4 = false
+      isFire3 = false
+      isFire2 = false
+      isFire1 = false
    }
 
    private fun life() {
@@ -422,7 +432,7 @@ class DynamicRenderingManager(
          6 -> {
             locationCockroach!!.rotate(-90F)
             locationCockroach!!.pointStart.x -= 15.0
-            sound!!.playKatastrofa()
+            sound!!.playAccident()
          }
          7 -> {
             locationCockroach!!.rotate(90F)
@@ -714,7 +724,9 @@ class DynamicRenderingManager(
       if (s == invasive) {
          when (s) {
             "cockroach" -> {
+               sound?.playAccident()
                locationCockroach!!.isDestroyed = true
+               setFalse()
                gameOver()
             }
             "mainHero" -> {

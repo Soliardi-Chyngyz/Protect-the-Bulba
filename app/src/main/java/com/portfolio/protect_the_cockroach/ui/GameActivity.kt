@@ -1,6 +1,7 @@
 package com.portfolio.protect_the_cockroach.ui
 
 import android.annotation.SuppressLint
+import android.content.Context
 import android.content.Intent
 import android.os.*
 import android.view.MotionEvent
@@ -45,6 +46,7 @@ class GameActivity : AppCompatActivity() {
    private var timer3: CountDownTimer? = null
    private var timer4: CountDownTimer? = null
    private var timer5: CountDownTimer? = null
+   private var timerHeroBullet: CountDownTimer? = null
 
    private var milliLeft: Long = 20000
    private var score = 0
@@ -130,20 +132,29 @@ class GameActivity : AppCompatActivity() {
       LooseDialog { status ->
          when (status) {
             OnClickStatus.MENU -> {
-               gameField.switchOffGame()
-               intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY;
-               this@GameActivity.finish()
+               openMenu()
             }
             OnClickStatus.RESTART -> {
-               milliLeft = 120000
-               onResumeFun()
-               score = 0
-               gameField.restartGame()
-               sound?.playBattleStart()
+               restart()
             }
             else -> (throw IllegalStateException("Invalid rating param value"))
          }
       }.show(supportFragmentManager, "LoosingDialog")
+   }
+
+   private fun restart() {
+      milliLeft = 120000
+      onResumeFun()
+      score = 0
+      gameField.restartGame()
+      sound?.playBattleStart()
+   }
+
+   private fun openMenu() {
+      gameField.switchOffGame()
+      intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY;
+      startActivity(Intent(this, MainActivity::class.java))
+      this@GameActivity.finish()
    }
 
    private fun onPauseFun() {
@@ -154,11 +165,7 @@ class GameActivity : AppCompatActivity() {
                onResumeFun()
             }
             OnClickStatus.RESTART -> {
-               milliLeft = 120000
-               onResumeFun()
-               score = 0
-               gameField.restartGame()
-               sound?.playBattleStart()
+               restart()
             }
             OnClickStatus.EXIT -> {
                this.onBackPressed()
@@ -181,6 +188,7 @@ class GameActivity : AppCompatActivity() {
       timer3?.start()
       timer4?.start()
       timer5?.start()
+      timerHeroBullet?.start()
    }
 
    private fun onPauseCDT() {
@@ -189,6 +197,7 @@ class GameActivity : AppCompatActivity() {
       timer3?.cancel()
       timer4?.cancel()
       timer5?.cancel()
+      timerHeroBullet?.cancel()
    }
 
    override fun onBackPressed() {
@@ -198,7 +207,7 @@ class GameActivity : AppCompatActivity() {
    }
 
    private fun CDTimerBullet() {
-      object : CountDownTimer(2000, 1000) {
+      timerHeroBullet = object : CountDownTimer(2000, 1000) {
          override fun onTick(millisUntilFinished: Long) {
          }
 
@@ -301,13 +310,21 @@ class GameActivity : AppCompatActivity() {
             }
 
             override fun onFinish() {
+               isStarted = false
+               val pref = getSharedPreferences(resources.getString(R.string.pref), Context.MODE_PRIVATE)
+               score = pref.getInt(Constants.PREFS_LEVEL, 0)
+               var s = 0
+                  if (level >= score) {
+                     s = level + 1
+                  }
+               if (s != 0){
+                  pref.edit().putInt(Constants.PREFS_LEVEL, s).apply()
+               }
                gameField.pauseGame()
                VictoryDialog(score) { status ->
                   when (status) {
                      OnClickStatus.MENU -> {
-                        gameField.switchOffGame()
-                        intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY;
-                        this@GameActivity.finish()
+                        openMenu()
                      }
                      OnClickStatus.NEXT -> {
                         if (level != 0) {

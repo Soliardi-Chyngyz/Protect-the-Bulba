@@ -8,9 +8,10 @@
     <string name="restart">Restart</string>
     <string name="exit">exit</string>
     <string name="score_0">Score: 0</string>
-    <string name="congratulations">Сongratulations</string>
+    <string name="congratulations">Congratulations</string>
     <string name="next">next</string>
     <string name="menu">Menu</string>
     <string name="war">Война - это когда правительство говорит тебе, кто плохой парень. Революция - когда ты решаешь это сам.</string>
     <string name="loosing">The battle is lost</string>
+    <string name="pref">pref</string>
 </resources>

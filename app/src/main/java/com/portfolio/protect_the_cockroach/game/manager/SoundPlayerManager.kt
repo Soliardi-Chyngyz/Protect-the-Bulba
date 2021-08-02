@@ -22,7 +22,8 @@ class SoundPlayerManager(context: Context) {
 
    private var vot_i_vse: MediaPlayer? = null
    private var eto: MediaPlayer? = null
-   private var katastrofa: MediaPlayer? = null
+   private var catastrophe: MediaPlayer? = null
+   private var loose: MediaPlayer? = null
 
    init {
       moving = MediaPlayer.create(context, R.raw.ezdamini)
@@ -34,12 +35,17 @@ class SoundPlayerManager(context: Context) {
       middleShot4 = MediaPlayer.create(context, R.raw.vystrelmini)
       middleShot5 = MediaPlayer.create(context, R.raw.vystrelmini)
       eto = MediaPlayer.create(context, R.raw.jeto)
-      katastrofa = MediaPlayer.create(context, R.raw.katastrofa)
+      catastrophe = MediaPlayer.create(context, R.raw.katastrofa)
       vot_i_vse = MediaPlayer.create(context, R.raw.votivse)
       miniDamaged = MediaPlayer.create(context, R.raw.podryvmini)
       bonus = MediaPlayer.create(context, R.raw.bonusmini)
       battleStart = MediaPlayer.create(context, R.raw.battle_start)
       pick = MediaPlayer.create(context, R.raw.pick)
+      loose = MediaPlayer.create(context, R.raw.lose)
+   }
+
+   fun playLoose(){
+      loose?.start()
    }
 
    fun playPick() {
@@ -66,8 +72,8 @@ class SoundPlayerManager(context: Context) {
       eto!!.start()
    }
 
-   fun playKatastrofa() {
-      katastrofa!!.start()
+   fun playAccident() {
+      catastrophe!!.start()
    }
 
    fun playMoving(){
