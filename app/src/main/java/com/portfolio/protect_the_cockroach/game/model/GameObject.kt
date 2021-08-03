@@ -17,7 +17,7 @@ abstract class GameObject(
     var downY: Double
 
     var pointStart: GamePoint = GamePoint()
-    var pointEnd: GamePoint = GamePoint()
+    private var pointEnd: GamePoint = GamePoint()
 
     var isDestroyed = false
     var type: Type? = type

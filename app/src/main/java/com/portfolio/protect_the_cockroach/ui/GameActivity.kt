@@ -25,6 +25,7 @@ import kotlin.random.Random
 @Suppress("DEPRECATION")
 class GameActivity : AppCompatActivity() {
 
+   // region fields
    val gameField: GameField by lazy {
       return@lazy this.findViewById<GameField>(R.id.game_field)
    }
@@ -48,11 +49,13 @@ class GameActivity : AppCompatActivity() {
    private var timer5: CountDownTimer? = null
    private var timerHeroBullet: CountDownTimer? = null
 
-   private var milliLeft: Long = 20000
+   private var milliLeft: Long = 120000
+   private var timer: Long = 0
    private var score = 0
    private var bonusTime = 0L
 
    private var level = 0
+   //endregion
 
    override fun onCreate(savedInstanceState: Bundle?) {
       super.onCreate(savedInstanceState)
@@ -94,10 +97,6 @@ class GameActivity : AppCompatActivity() {
       }
    }
 
-   fun setMilliLeft(v: Long) {
-      milliLeft = v
-   }
-
    fun setScore(v: Int) {
       score = v
    }
@@ -106,6 +105,8 @@ class GameActivity : AppCompatActivity() {
       val intent = intent
       val value = intent.getIntExtra(Constants.KEY_LEVEL, 0)
       level = value
+      milliLeft += level * 60000
+      timer = milliLeft
       gameField.setArg(value)
    }
 
@@ -143,7 +144,7 @@ class GameActivity : AppCompatActivity() {
    }
 
    private fun restart() {
-      milliLeft = 120000
+      milliLeft = timer
       onResumeFun()
       score = 0
       gameField.restartGame()
@@ -152,14 +153,13 @@ class GameActivity : AppCompatActivity() {
 
    private fun openMenu() {
       gameField.switchOffGame()
-      intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY;
       startActivity(Intent(this, MainActivity::class.java))
       this@GameActivity.finish()
    }
 
    private fun onPauseFun() {
       onPauseLocal()
-      MenuDialog { status ->
+      MenuDialog(sound) { status ->
          when (status) {
             OnClickStatus.RESUME -> {
                onResumeFun()
@@ -169,6 +169,14 @@ class GameActivity : AppCompatActivity() {
             }
             OnClickStatus.EXIT -> {
                this.onBackPressed()
+            }
+            OnClickStatus.MUSIC_ON -> {
+               gameField.musicStatus(true)
+               sound = SoundPlayerManager(this)
+            }
+            OnClickStatus.MUSIC_OFF -> {
+               gameField.musicStatus(false)
+               sound = null
             }
             else -> (throw IllegalStateException("Invalid rating param value"))
          }
@@ -331,7 +339,6 @@ class GameActivity : AppCompatActivity() {
                            gameField.switchOffGame()
                            val intent = Intent(this@GameActivity, GameActivity::class.java)
                            intent.putExtra(Constants.KEY_LEVEL, level + 1)
-                           intent.flags = Intent.FLAG_ACTIVITY_NO_HISTORY;
                            startActivity(intent)
                            this@GameActivity.finish()
                         }
@@ -356,11 +363,11 @@ class GameActivity : AppCompatActivity() {
       this.setOnTouchListener { _, event ->
          when (event?.action) {
             MotionEvent.ACTION_DOWN -> {
-               sound!!.playMoving()
+               sound?.playMoving()
                gameField.getListener()?.setOnTouchClickFirst(typeMove)
             }
             MotionEvent.ACTION_UP -> {
-               sound!!.pauseMoving()
+               sound?.pauseMoving()
                gameField.getListener()?.setOnTouchClickFirst(null)
             }
          }

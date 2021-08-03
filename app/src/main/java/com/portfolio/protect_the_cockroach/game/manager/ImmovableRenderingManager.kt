@@ -25,7 +25,7 @@ class ImmovableRenderingManager(
 
    private val tableLinePaint: Paint = run {
       val paint = Paint()
-      paint.color = Color.WHITE
+      paint.color = Color.GRAY
       paint.strokeWidth = 1f
       return@run paint
    }
@@ -89,21 +89,16 @@ class ImmovableRenderingManager(
       var list = listOf<LocationObject>()
 
       when (level) {
-         1 -> {
-            list = LocationLists.getLevelPosition1()
-         }
-         2 -> {
-            list = LocationLists.getLevelPosition2()
-         }
-         3 -> {
-            list = LocationLists.getLevelPosition3()
-         }
-         4 -> {
-            list = LocationLists.getLevelPosition4()
-         }
-         5 -> {
-            list = LocationLists.getLevelPosition5()
-         }
+         1 -> list = LocationLists.getLevelPosition1()
+         2 -> list = LocationLists.getLevelPosition2()
+         3 -> list = LocationLists.getLevelPosition3()
+         4 -> list = LocationLists.getLevelPosition4()
+         5 -> list = LocationLists.getLevelPosition5()
+         6 -> list = LocationLists.getLevelPosition6()
+         7 -> list = LocationLists.getLevelPosition7()
+         8 -> list = LocationLists.getLevelPosition8()
+         9 -> list = LocationLists.getLevelPosition9()
+         10 -> list = LocationLists.getLevelPosition10()
       }
       if (list.isNotEmpty()){
          WallObject(list[0].coordinate, widthCell, heightCell, resources, R.drawable.kirpich).drawWall(canvas, list[0].name)

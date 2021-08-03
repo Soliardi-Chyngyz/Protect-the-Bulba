@@ -10,11 +10,6 @@ class GameCoordinate {
         this.y = y
     }
 
-    /*constructor(point: Double) {
-        this.x = point.x
-        this.y = point.y
-    }*/
-
     constructor() {
         this.x = Double.NaN.toInt()
         this.y = Double.NaN.toInt()

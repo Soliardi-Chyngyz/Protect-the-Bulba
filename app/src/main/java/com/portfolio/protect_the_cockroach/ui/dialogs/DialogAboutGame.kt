@@ -18,8 +18,8 @@ class DialogAboutGame : DialogFragment() {
       savedInstanceState: Bundle?
    ): View? {
       if (dialog != null && dialog!!.window != null) {
-         dialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT));
-         dialog!!.window!!.requestFeature(Window.FEATURE_NO_TITLE);
+         dialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+         dialog!!.window!!.requestFeature(Window.FEATURE_NO_TITLE)
       }
       return inflater.inflate(R.layout.fragment_about_game, container, false)
    }

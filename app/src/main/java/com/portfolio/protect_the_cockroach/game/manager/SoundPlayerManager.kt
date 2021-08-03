@@ -25,6 +25,10 @@ class SoundPlayerManager(context: Context) {
    private var catastrophe: MediaPlayer? = null
    private var loose: MediaPlayer? = null
 
+   private var tron: MediaPlayer? = null
+   private var intro1: MediaPlayer? = null
+   private var intro2: MediaPlayer? = null
+
    init {
       moving = MediaPlayer.create(context, R.raw.ezdamini)
       motor = MediaPlayer.create(context, R.raw.motormini)
@@ -42,6 +46,25 @@ class SoundPlayerManager(context: Context) {
       battleStart = MediaPlayer.create(context, R.raw.battle_start)
       pick = MediaPlayer.create(context, R.raw.pick)
       loose = MediaPlayer.create(context, R.raw.lose)
+      tron = MediaPlayer.create(context, R.raw.tron)
+      intro1 = MediaPlayer.create(context, R.raw.intro)
+      intro2 = MediaPlayer.create(context, R.raw.intro2)
+   }
+
+   fun playIntro1() {
+      intro1?.start()
+   }
+
+   fun playIntro2() {
+      intro2?.start()
+   }
+
+   fun playTron(){
+      tron?.start()
+   }
+
+   fun pauseTron(){
+      tron?.pause()
    }
 
    fun playLoose(){

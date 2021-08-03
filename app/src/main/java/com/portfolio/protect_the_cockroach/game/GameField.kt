@@ -25,6 +25,10 @@ class GameField @JvmOverloads constructor(
 
    }
 
+   fun musicStatus(b: Boolean) {
+      gameDrawThread?.music(b)
+   }
+
    fun sendActivity(gameActivity: GameActivity) {
       activity = gameActivity
    }

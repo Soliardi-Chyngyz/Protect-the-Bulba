@@ -64,4 +64,15 @@
         <item name="android:windowExitAnimation">@anim/anim_out</item>
     </style>
 
+    <style name="CustomCheckBox" parent="Theme.AppCompat.Light">
+        <item name="colorControlNormal">@color/white</item>
+        <item name="colorControlActivated">@color/gray</item>
+    </style>
+
+    <style name="TxtStyle">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:paddingHorizontal" tools:ignore="NewApi">15dp</item>
+        <item name="android:textStyle">italic</item>
+    </style>
 </resources>

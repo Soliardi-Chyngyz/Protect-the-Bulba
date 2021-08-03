@@ -72,6 +72,7 @@ class DynamicRenderingManager(
 
    private var sound: SoundPlayerManager? = null
    private var speedHeroBullet = 30
+   private var speedBotsBullet = 30
 
    // Life
    private var life1: DynamicObject? = null
@@ -210,6 +211,8 @@ class DynamicRenderingManager(
          this.canvas = canvas
       }
 
+      speedLevel(level)
+
       heroBehavior(canvas)
 
       cockroachBehavior(canvas)
@@ -219,13 +222,29 @@ class DynamicRenderingManager(
       life()
    }
 
+   fun musicStatus(value: Boolean) {
+      sound = if (value)
+         SoundPlayerManager(context)
+      else
+         null
+   }
+
+   private fun speedLevel(level: Int) {
+      when (level) {
+         in 4..5 -> speedBotsBullet = 35
+         in 5..7 -> speedBotsBullet = 43
+         in 8..9 -> speedBotsBullet = 50
+         10 -> speedBotsBullet = 60
+      }
+   }
+
    fun restart() {
       isRestart = true
+      setFalse()
       locationMap.forEach {
          it.value.isDestroyed = true
       }
       locationHero!!.isDestroyed = true
-      setFalse()
    }
 
    private fun setFalse() {
@@ -265,20 +284,15 @@ class DynamicRenderingManager(
    }
 
    @SuppressLint("SetTextI18n")
-   private fun bulletStartPosition(
-      bullet: DynamicObject?,
-      tank: DynamicObject?,
-      rotation: Float,
-      isFire: Boolean
-   ) {
+   private fun bulletStartPosition(bullet: DynamicObject?, tank: DynamicObject?, rotation: Float, isFire: Boolean) {
       if (bullet != null) {
          if (!tank!!.frozen) {
             if (isFire) {
-               var speedBullet = 30
-               when (tank) {
+               val speedBullet: Int = when (tank) {
                   locationHero -> {
-                     speedBullet = speedHeroBullet
+                     speedHeroBullet
                   }
+                  else -> speedBotsBullet
                }
                when (rotation) {
                   0F -> bullet.pointCenter.y -= speedBullet
@@ -406,37 +420,45 @@ class DynamicRenderingManager(
       when (randomValue3) {
          5 -> {
             locationCockroach!!.rotate(180F)
-            locationCockroach!!.pointStart.y += 15.0
+            if (countDown == 0)
+               locationCockroach!!.pointStart.y += 15.0
          }
          4 -> {
             locationCockroach!!.rotate(90F)
-            locationCockroach!!.pointStart.x += 15.0
+            if (countDown == 0)
+               locationCockroach!!.pointStart.x += 15.0
          }
          3 -> {
             locationCockroach!!.rotate(-90F)
-            locationCockroach!!.pointStart.x -= 15.0
+            if (countDown == 0)
+               locationCockroach!!.pointStart.x -= 15.0
          }
          2 -> {
             locationCockroach!!.rotate(0F)
-            locationCockroach!!.pointStart.y -= 15.0
+            if (countDown == 0)
+               locationCockroach!!.pointStart.y -= 15.0
             sound?.playEto()
          }
          1 -> {
             locationCockroach!!.rotate(180F)
-            locationCockroach!!.pointStart.y += 15.0
+            if (countDown == 0)
+               locationCockroach!!.pointStart.y += 15.0
          }
          0 -> {
             locationCockroach!!.rotate(0F)
-            locationCockroach!!.pointStart.y -= 15.0
+            if (countDown == 0)
+               locationCockroach!!.pointStart.y -= 15.0
          }
          6 -> {
             locationCockroach!!.rotate(-90F)
-            locationCockroach!!.pointStart.x -= 15.0
-            sound!!.playAccident()
+            if (countDown == 0)
+               locationCockroach!!.pointStart.x -= 15.0
+            sound?.playAccident()
          }
          7 -> {
             locationCockroach!!.rotate(90F)
-            locationCockroach!!.pointStart.x += 15.0
+            if (countDown == 0)
+               locationCockroach!!.pointStart.x += 15.0
          }
       }
 
@@ -479,12 +501,7 @@ class DynamicRenderingManager(
       }
    }
 
-   private fun randomGenerator(
-      canvas: Canvas?,
-      dynamicObject: DynamicObject?,
-      randomValue: Int,
-      string: String
-   ) {
+   private fun randomGenerator(canvas: Canvas?, dynamicObject: DynamicObject?, randomValue: Int, string: String) {
       val lastLocX = dynamicObject!!.pointStart.x
       val lastLocY = dynamicObject.pointStart.y
 
@@ -546,50 +563,37 @@ class DynamicRenderingManager(
       }
    }
 
-   private fun DynamicObject.drawAndCollision(
-      canvas: Canvas?,
-      s: String,
-      dynamicObject: DynamicObject,
-      lastLocX: Double,
-      lastLocY: Double,
-   ) {
+   private fun DynamicObject.drawAndCollision(canvas: Canvas?, s: String, dynamicObject: DynamicObject, lastLocX: Double, lastLocY: Double) {
       if (dynamicObject.isDestroyed) {
          when (s) {
             "mainHero" -> {
                locationHero!!.isDestroyed = false
-               if (!isRestart)
-                  isFireHero = true
+               if (!isRestart) isFireHero = true
             }
             "Tank4" -> {
-               if (!isRestart)
-                  isFire1 = true
                locationMap["Tank4"]!!.isDestroyed = false
+               if (!isRestart) isFire1 = true
             }
             "Tank8" -> {
-               if (!isRestart)
-                  isFire2 = true
+               if (!isRestart) isFire2 = true
                locationMap["Tank8"]!!.isDestroyed = false
             }
             "Tank12" -> {
-               if (!isRestart)
-                  isFire3 = true
                locationMap["Tank12"]!!.isDestroyed = false
+               if (!isRestart) isFire3 = true
             }
             "Tank16" -> {
-               if (!isRestart)
-                  isFire4 = true
                locationMap["Tank16"]!!.isDestroyed = false
+               if (!isRestart) isFire4 = true
             }
             "Tank20" -> {
-               if (!isRestart)
-                  isFire5 = true
                locationMap["Tank20"]!!.isDestroyed = false
+               if (!isRestart) isFire5 = true
             }
             "cockroach" -> {
                locationCockroach!!.isDestroyed = false
             }
          }
-         isRestart = false
          when (s) {
             "mainHero" -> {
                locationHero!!.pointStart.x = widthCell * 8 - widthCell
@@ -724,7 +728,7 @@ class DynamicRenderingManager(
       if (s == invasive) {
          when (s) {
             "cockroach" -> {
-               sound?.playAccident()
+               sound?.playLoose()
                locationCockroach!!.isDestroyed = true
                setFalse()
                gameOver()
@@ -787,7 +791,7 @@ class DynamicRenderingManager(
       bullet!!.pointCenter.x = accuratePosition.x
       bullet!!.pointCenter.y = accuratePosition.y
       if (!locationMap["Tank4"]!!.isDestroyed && !locationMap["Tank4"]!!.frozen)
-         sound!!.playShot()
+         sound?.playShot()
    }
 
    // ------------ ^_^ ----------- II
@@ -803,7 +807,7 @@ class DynamicRenderingManager(
       bullet2!!.pointCenter.x = accuratePosition.x
       bullet2!!.pointCenter.y = accuratePosition.y
       if (!locationMap["Tank8"]!!.isDestroyed && !locationMap["Tank8"]!!.frozen)
-         sound!!.playShot2()
+         sound?.playShot2()
    }
 
    // ------------ ^_^ ----------- III
@@ -819,7 +823,7 @@ class DynamicRenderingManager(
       bullet3!!.pointCenter.x = accuratePosition.x
       bullet3!!.pointCenter.y = accuratePosition.y
       if (!locationMap["Tank12"]!!.isDestroyed && !locationMap["Tank12"]!!.frozen)
-         sound!!.playShot3()
+         sound?.playShot3()
    }
 
    // ------------ ^_^ ----------- IV
@@ -835,7 +839,7 @@ class DynamicRenderingManager(
       bullet4!!.pointCenter.x = accuratePosition.x
       bullet4!!.pointCenter.y = accuratePosition.y
       if (!locationMap["Tank16"]!!.isDestroyed && !locationMap["Tank16"]!!.frozen)
-         sound!!.playShot4()
+         sound?.playShot4()
    }
 
    // ------------ ^_^ -----------  V
@@ -851,7 +855,7 @@ class DynamicRenderingManager(
       bullet5!!.pointCenter.x = accuratePosition.x
       bullet5!!.pointCenter.y = accuratePosition.y
       if (!locationMap["Tank20"]!!.isDestroyed && !locationMap["Tank20"]!!.frozen)
-         sound!!.playShot5()
+         sound?.playShot5()
    }
 
    // ------------ ^_^ -----------  MainHero
@@ -863,6 +867,7 @@ class DynamicRenderingManager(
             AccuratePosition.calculating(rotationHero, locationHero, widthCell, heightCell)
          bulletHero!!.pointCenter.x = accuratePosition.x
          bulletHero!!.pointCenter.y = accuratePosition.y
+//         isRestart = false
       }
    }
 // endregion

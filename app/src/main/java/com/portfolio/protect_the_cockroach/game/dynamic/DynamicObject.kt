@@ -24,7 +24,7 @@ open class DynamicObject(
    Type.Dynamic,
    theirOwn
 ) {
-   var img = idBitmap
+   private var img = idBitmap
    var rotatedBitmap: Bitmap? = null
    var rotation: Float = 0f
 

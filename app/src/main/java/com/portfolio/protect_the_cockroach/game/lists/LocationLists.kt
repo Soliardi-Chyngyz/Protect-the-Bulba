@@ -108,17 +108,17 @@ class LocationLists {
          LocationObject(GameCoordinate(2, 8), "5k12").addToList()
          LocationObject(GameCoordinate(3, 7), "5k13").addToList()
          LocationObject(GameCoordinate(4, 6), "5k14").addToList()
-         LocationObject(GameCoordinate(5, 4), "5k15").addToList()
-         LocationObject(GameCoordinate(6, 3), "5k16").addToList()
-         LocationObject(GameCoordinate(15, 4), "5k17").addToList()
+         LocationObject(GameCoordinate(3, 5), "5k15").addToList()
+         LocationObject(GameCoordinate(2, 4), "5k16").addToList()
+         LocationObject(GameCoordinate(19, 4), "5k17").addToList()
 
-         LocationObject(GameCoordinate(8, 4), "5b1").addToList()
+         LocationObject(GameCoordinate(8, 2), "5b1").addToList()
          LocationObject(GameCoordinate(9, 3), "5b2").addToList()
-         LocationObject(GameCoordinate(10, 2), "5b3").addToList()
-         LocationObject(GameCoordinate(11, 3), "5b4").addToList()
-         LocationObject(GameCoordinate(12, 4), "5b5").addToList()
+         LocationObject(GameCoordinate(8, 4), "5b3").addToList()
+         LocationObject(GameCoordinate(9, 5), "5b4").addToList()
+         LocationObject(GameCoordinate(8, 6), "5b5").addToList()
 
-         LocationObject(GameCoordinate(16, 5), "5k1").addToList()
+         LocationObject(GameCoordinate(18, 5), "5k1").addToList()
          LocationObject(GameCoordinate(17, 6), "5k2").addToList()
          LocationObject(GameCoordinate(18, 7), "5k3").addToList()
          LocationObject(GameCoordinate(19, 8), "5k4").addToList()
@@ -126,5 +126,119 @@ class LocationLists {
          return list
       }
 
+      fun getLevelPosition6(): List<LocationObject> {
+         list.clear()
+         LocationObject(GameCoordinate(6, 3), "5k12").addToList()
+         LocationObject(GameCoordinate(5, 4), "5k13").addToList()
+         LocationObject(GameCoordinate(6, 5), "5k14").addToList()
+         LocationObject(GameCoordinate(5, 6), "5k15").addToList()
+         LocationObject(GameCoordinate(6, 7), "5k16").addToList()
+         LocationObject(GameCoordinate(14, 3), "5k17").addToList()
+
+         LocationObject(GameCoordinate(2, 2), "5b1").addToList()
+         LocationObject(GameCoordinate(3, 2), "5b2").addToList()
+         LocationObject(GameCoordinate(18, 2), "5b3").addToList()
+         LocationObject(GameCoordinate(19, 2), "5b4").addToList()
+         LocationObject(GameCoordinate(20, 2), "5b5").addToList()
+
+         LocationObject(GameCoordinate(15, 4), "5k1").addToList()
+         LocationObject(GameCoordinate(14, 5), "5k2").addToList()
+         LocationObject(GameCoordinate(15, 6), "5k3").addToList()
+         LocationObject(GameCoordinate(14, 7), "5k4").addToList()
+
+         return list
+      }
+
+      fun getLevelPosition7(): List<LocationObject> {
+         list.clear()
+         LocationObject(GameCoordinate(19, 2), "5k12").addToList()
+         LocationObject(GameCoordinate(18, 3), "5k13").addToList()
+         LocationObject(GameCoordinate(17, 4), "5k14").addToList()
+         LocationObject(GameCoordinate(16, 5), "5k15").addToList()
+         LocationObject(GameCoordinate(15, 6), "5k16").addToList()
+         LocationObject(GameCoordinate(19, 3), "5k17").addToList()
+
+         LocationObject(GameCoordinate(1, 4), "5b1").addToList()
+         LocationObject(GameCoordinate(1, 5), "5b2").addToList()
+         LocationObject(GameCoordinate(2, 4), "5b3").addToList()
+         LocationObject(GameCoordinate(2, 5), "5b4").addToList()
+         LocationObject(GameCoordinate(1, 6), "5b5").addToList()
+
+         LocationObject(GameCoordinate(18, 4), "5k1").addToList()
+         LocationObject(GameCoordinate(17, 5), "5k2").addToList()
+         LocationObject(GameCoordinate(16, 6), "5k3").addToList()
+         LocationObject(GameCoordinate(15, 7), "5k4").addToList()
+
+         return list
+      }
+
+      fun getLevelPosition8(): List<LocationObject> {
+         list.clear()
+         LocationObject(GameCoordinate(19, 2), "5k12").addToList()
+         LocationObject(GameCoordinate(18, 3), "5k13").addToList()
+         LocationObject(GameCoordinate(17, 4), "5k14").addToList()
+         LocationObject(GameCoordinate(16, 5), "5k15").addToList()
+         LocationObject(GameCoordinate(15, 6), "5k16").addToList()
+         LocationObject(GameCoordinate(1, 2), "5k17").addToList()
+
+         LocationObject(GameCoordinate(1, 9), "5b1").addToList()
+         LocationObject(GameCoordinate(2, 9), "5b2").addToList()
+         LocationObject(GameCoordinate(18, 9), "5b3").addToList()
+         LocationObject(GameCoordinate(19, 9), "5b4").addToList()
+         LocationObject(GameCoordinate(19, 3), "5b5").addToList()
+
+         LocationObject(GameCoordinate(2, 3), "5k1").addToList()
+         LocationObject(GameCoordinate(3, 4), "5k2").addToList()
+         LocationObject(GameCoordinate(4, 5), "5k3").addToList()
+         LocationObject(GameCoordinate(5, 6), "5k4").addToList()
+
+         return list
+      }
+
+      fun getLevelPosition9(): List<LocationObject> {
+         list.clear()
+         LocationObject(GameCoordinate(3, 3), "5k12").addToList()
+         LocationObject(GameCoordinate(3, 4), "5k13").addToList()
+         LocationObject(GameCoordinate(3, 5), "5k14").addToList()
+         LocationObject(GameCoordinate(3, 6), "5k15").addToList()
+         LocationObject(GameCoordinate(3, 7), "5k16").addToList()
+         LocationObject(GameCoordinate(4, 3), "5k17").addToList()
+
+         LocationObject(GameCoordinate(1, 9), "5b1").addToList()
+         LocationObject(GameCoordinate(20, 9), "5b2").addToList()
+         LocationObject(GameCoordinate(1, 5), "5b3").addToList()
+         LocationObject(GameCoordinate(20, 5), "5b4").addToList()
+         LocationObject(GameCoordinate(19, 5), "5b5").addToList()
+
+         LocationObject(GameCoordinate(4, 4), "5k1").addToList()
+         LocationObject(GameCoordinate(4, 5), "5k2").addToList()
+         LocationObject(GameCoordinate(4, 6), "5k3").addToList()
+         LocationObject(GameCoordinate(4, 7), "5k4").addToList()
+
+         return list
+      }
+
+      fun getLevelPosition10(): List<LocationObject> {
+         list.clear()
+         LocationObject(GameCoordinate(3, 9), "5k12").addToList()
+         LocationObject(GameCoordinate(1, 6), "5k13").addToList()
+         LocationObject(GameCoordinate(2, 7), "5k14").addToList()
+         LocationObject(GameCoordinate(3, 8), "5k15").addToList()
+         LocationObject(GameCoordinate(4, 9), "5k16").addToList()
+         LocationObject(GameCoordinate(1, 5), "5k17").addToList()
+
+         LocationObject(GameCoordinate(20, 2), "5b1").addToList()
+         LocationObject(GameCoordinate(19, 3), "5b2").addToList()
+         LocationObject(GameCoordinate(18, 4), "5b3").addToList()
+         LocationObject(GameCoordinate(17, 5), "5b4").addToList()
+         LocationObject(GameCoordinate(16, 6), "5b5").addToList()
+
+         LocationObject(GameCoordinate(2, 6), "5k1").addToList()
+         LocationObject(GameCoordinate(3, 7), "5k2").addToList()
+         LocationObject(GameCoordinate(4, 8), "5k3").addToList()
+         LocationObject(GameCoordinate(5, 9), "5k4").addToList()
+
+         return list
+      }
    }
 }

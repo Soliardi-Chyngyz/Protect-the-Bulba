@@ -18,9 +18,46 @@
         <com.google.android.material.textview.MaterialTextView
             android:text="@string/info"
             android:layout_width="wrap_content"
-            android:gravity="center"
             android:layout_height="wrap_content" />
 
-    </LinearLayout>
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_marginTop="10dp"
+            android:textSize="16sp"
+            android:text="@string/briefly_about_the_rules_of_the_game"
+            android:layout_width="wrap_content"
+            android:textStyle="bold"
+            android:layout_marginVertical="10dp"
+            android:layout_height="wrap_content" />
 
+        <com.google.android.material.textview.MaterialTextView
+            android:text="@string/first_rule"
+            style="@style/TxtStyle"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:text="@string/you_are_given_three_lives_each_round"
+            style="@style/TxtStyle"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:text="@string/don_t_relax_some_bots_are_destroyed_after_a_few_hits"
+            android:textStyle="bold"
+            style="@style/TxtStyle"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:text="@string/you_will_have_bonuses_use_them"
+            style="@style/TxtStyle"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:text="@string/the_game_is_lost_if_the_cockroach_is_killed"
+            style="@style/TxtStyle"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_marginTop="10dp"
+            android:textSize="16sp"
+            android:text="@string/good_luck"
+            android:layout_width="wrap_content"
+            android:layout_marginStart="10dp"
+            android:textStyle="bold"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

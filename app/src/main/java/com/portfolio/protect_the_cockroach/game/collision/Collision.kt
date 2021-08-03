@@ -63,11 +63,11 @@ class Collision {
       return false
    }
 
-   val bonusObj = ImmovableRenderingManager.listOfBonus
+   private val bonusObj = ImmovableRenderingManager.listOfBonus
 
    fun stumbledWithBonus(obj: GameObject): String? {
       if (!bonusObj.isNullOrEmpty()) {
-         bonusObj.forEach { it ->
+         bonusObj.forEach {
             if (obj.type == GameObject.Type.Dynamic) {
                if (obj.rightX in it.value.leftX..it.value.rightX && it.value.upY in obj.upY..obj.downY) {
                   ImmovableRenderingManager.invasiveColl[it.key] = "bonus"

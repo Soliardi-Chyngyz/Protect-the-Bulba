@@ -1,17 +1,35 @@
 <resources>
-    <string name="app_name">Protect-the-Cockroach</string>
+    <string name="app_name">Protect the Cockroach</string>
+    <string name="pref">pref</string>
+
+    <!--Menu-->
     <string name="start">Start</string>
-    <string name="about_game">About game</string>
-    <string name="info">Hello everyone, I wrote this game based on the good old Battle City 1990 game, many things in the game can be different, such as sounds, game rules, mechanics.</string>
     <string name="pause">Pause</string>
     <string name="resume">Resume</string>
     <string name="restart">Restart</string>
     <string name="exit">exit</string>
+
+    <!--Game Activity-->
     <string name="score_0">Score: 0</string>
+
+    <!--Victory-->
     <string name="congratulations">Congratulations</string>
     <string name="next">next</string>
     <string name="menu">Menu</string>
+
+    <!--Loose-->
     <string name="war">Война - это когда правительство говорит тебе, кто плохой парень. Революция - когда ты решаешь это сам.</string>
     <string name="loosing">The battle is lost</string>
-    <string name="pref">pref</string>
+    <string name="music">MUSIC</string>
+
+    <!--About Game-->
+    <string name="about_game">About game</string>
+    <string name="info">Hello everyone, I wrote this game based on the good old Battle City 1990 game, many things in the game can be different, such as sounds, game rules, mechanics.</string>
+    <string name="briefly_about_the_rules_of_the_game">Briefly about the rules of the game:</string>
+    <string name="first_rule"> - to win you need to save the life of a cockroach until the end of the time for the current level</string>
+    <string name="you_are_given_three_lives_each_round">- you are given three lives each round</string>
+    <string name="don_t_relax_some_bots_are_destroyed_after_a_few_hits">- do not relax, some bots are destroyed after a few hits</string>
+    <string name="you_will_have_bonuses_use_them">- you will have bonuses, use them</string>
+    <string name="the_game_is_lost_if_the_cockroach_is_killed">- the game is lost if the cockroach is killed</string>
+    <string name="good_luck">Good luck!</string>
 </resources>

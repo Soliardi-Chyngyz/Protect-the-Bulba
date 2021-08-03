@@ -8,7 +8,6 @@ import android.view.SurfaceHolder
 import com.portfolio.protect_the_cockroach.game.collision.Collision
 import com.portfolio.protect_the_cockroach.game.manager.DynamicRenderingManager
 import com.portfolio.protect_the_cockroach.game.manager.ImmovableRenderingManager
-import com.portfolio.protect_the_cockroach.game.manager.UIEventsManager
 import com.portfolio.protect_the_cockroach.ui.GameActivity
 
 class GameDrawThread(
@@ -29,9 +28,6 @@ class GameDrawThread(
    var dynamicRenderingManager: DynamicRenderingManager? =
       DynamicRenderingManager(widthScreen, heightScreen, resources, context, activity, immovableRenderingManager!!, collision)
 
-   private var uiEventsManager: UIEventsManager = UIEventsManager(widthScreen, heightScreen)
-   private var isRestart = false
-
    private var surfaceHolder: SurfaceHolder? = surfaceHolder
    private var prevTime: Long = 0
 
@@ -40,6 +36,10 @@ class GameDrawThread(
 
    init {
       prevTime = System.currentTimeMillis()
+   }
+
+   fun music(value: Boolean) {
+      dynamicRenderingManager?.musicStatus(value)
    }
 
    fun restart() {
