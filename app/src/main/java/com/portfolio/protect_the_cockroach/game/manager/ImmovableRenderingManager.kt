@@ -145,11 +145,11 @@ class ImmovableRenderingManager(
             p11?.drawConcrete(canvas, "p11")
          }
 
-         WallObject(GameCoordinate(9, 9), widthCell, heightCell, resources, R.drawable.kirpich).drawWall(canvas, "k7")
-         WallObject(GameCoordinate(11, 9), widthCell, heightCell, resources, R.drawable.kirpich).drawWall(canvas, "k8")
-         WallObject(GameCoordinate(9, 8), widthCell, heightCell, resources, R.drawable.kirpich).drawWall(canvas, "k9")
-         WallObject(GameCoordinate(10, 8), widthCell, heightCell, resources, R.drawable.kirpich).drawWall(canvas, "k10")
-         WallObject(GameCoordinate(11, 8), widthCell, heightCell, resources, R.drawable.kirpich).drawWall(canvas, "k11")
+         WallObject(GameCoordinate(9, 9), widthCell, heightCell, resources, R.drawable.flag_belarus).drawWall(canvas, "k7")
+         WallObject(GameCoordinate(11, 9), widthCell, heightCell, resources, R.drawable.flag_belarus).drawWall(canvas, "k8")
+         WallObject(GameCoordinate(9, 8), widthCell, heightCell, resources, R.drawable.flag_belarus).drawWall(canvas, "k9")
+         WallObject(GameCoordinate(10, 8), widthCell, heightCell, resources, R.drawable.flag_belarus).drawWall(canvas, "k10")
+         WallObject(GameCoordinate(11, 8), widthCell, heightCell, resources, R.drawable.flag_belarus).drawWall(canvas, "k11")
       }
    }
 

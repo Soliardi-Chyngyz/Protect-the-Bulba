@@ -4,6 +4,14 @@ plugins {
 }
 
 android {
+    signingConfigs {
+        debug {
+            storeFile file('D:\\Projrcts\\ptp\\my_keys.jks')
+            storePassword 'myKeyPassword'
+            keyAlias 'Protect'
+            keyPassword 'myKeyPassword'
+        }
+    }
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
@@ -13,6 +21,7 @@ android {
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -45,4 +54,11 @@ dependencies {
     // Glide
     implementation 'com.github.bumptech.glide:glide:4.12.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.12.0'
+
+    // Lifecycle
+    def lifecycle_version = "2.3.1"
+    // | for ViewModel
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+    // | for LiveData
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version"
 }

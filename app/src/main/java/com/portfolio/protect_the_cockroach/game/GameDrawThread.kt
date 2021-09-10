@@ -12,30 +12,48 @@ import com.portfolio.protect_the_cockroach.ui.GameActivity
 
 class GameDrawThread(
    surfaceHolder: SurfaceHolder,
-   resources: Resources,
+   val resources: Resources,
    widthScreen: Double,
    heightScreen: Double,
-   context: Context,
-   activity: GameActivity,
+   val context: Context,
+   private val activity: GameActivity,
    val score: Int,
 ) : Thread() {
 
    private var collision = Collision()
+
+   @Volatile
    var runFlag = false
    private var canvas: Canvas? = null
    var immovableRenderingManager: ImmovableRenderingManager? =
       ImmovableRenderingManager(widthScreen, heightScreen, resources, activity, collision)
    var dynamicRenderingManager: DynamicRenderingManager? =
-      DynamicRenderingManager(widthScreen, heightScreen, resources, context, activity, immovableRenderingManager!!, collision)
+      DynamicRenderingManager(
+         widthScreen,
+         heightScreen,
+         resources,
+         context,
+         activity,
+         immovableRenderingManager!!,
+         collision
+      )
 
-   private var surfaceHolder: SurfaceHolder? = surfaceHolder
+   var surfaceHolder: SurfaceHolder? = surfaceHolder
    private var prevTime: Long = 0
 
    private val lock = Object()
+
+   @Volatile
    private var pause = false
+
+   private var isCreated = false
 
    init {
       prevTime = System.currentTimeMillis()
+   }
+
+   fun setSpeed(tankSpeed: Int) {
+      dynamicRenderingManager?.tankSpeed = tankSpeed
    }
 
    fun music(value: Boolean) {
@@ -59,8 +77,8 @@ class GameDrawThread(
       pause = true
    }
 
-   fun resumeThread(){
-      synchronized(lock){
+   fun resumeThread() {
+      synchronized(lock) {
          pause = false
          lock.notifyAll()
       }
@@ -68,7 +86,7 @@ class GameDrawThread(
 
    override fun run() {
       while (runFlag) {
-         while(pause){
+         while (pause) {
             onPause()
          }
          canvas = null
@@ -94,13 +112,13 @@ class GameDrawThread(
       }
    }
 
-   private fun onPause(){
+   private fun onPause() {
       synchronized(lock) {
          try {
             synchronized(lock) {
                lock.wait()
             }
-         } catch (e: InterruptedException){
+         } catch (e: InterruptedException) {
             e.printStackTrace()
          }
       }

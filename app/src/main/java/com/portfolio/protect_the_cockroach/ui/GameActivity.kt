@@ -4,20 +4,21 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.os.*
+import android.os.Build.VERSION_CODES.LOLLIPOP
+import android.os.Build.VERSION_CODES.LOLLIPOP_MR1
 import android.view.MotionEvent
 import android.view.WindowInsets
 import android.view.WindowManager
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.ViewModelProvider
 import com.portfolio.protect_the_cockroach.R
 import com.portfolio.protect_the_cockroach.game.GameField
 import com.portfolio.protect_the_cockroach.game.constants.Constants
 import com.portfolio.protect_the_cockroach.game.manager.SoundPlayerManager
 import com.portfolio.protect_the_cockroach.game.model.OnClickStatus
-import com.portfolio.protect_the_cockroach.ui.dialogs.LooseDialog
-import com.portfolio.protect_the_cockroach.ui.dialogs.MenuDialog
-import com.portfolio.protect_the_cockroach.ui.dialogs.VictoryDialog
+import com.portfolio.protect_the_cockroach.ui.dialogs.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.random.Random
@@ -55,11 +56,15 @@ class GameActivity : AppCompatActivity() {
    private var bonusTime = 0L
 
    private var level = 0
+
+   private var viewModel: GameViewModel? = null
    //endregion
 
    override fun onCreate(savedInstanceState: Bundle?) {
       super.onCreate(savedInstanceState)
       setContentView(R.layout.activity_game)
+
+      viewModel = ViewModelProvider(this).get(GameViewModel::class.java)
 
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
          window.insetsController?.hide(WindowInsets.Type.statusBars())
@@ -71,7 +76,9 @@ class GameActivity : AppCompatActivity() {
       }
       window.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON)
 
-      sound = SoundPlayerManager(this)
+      buildVersionCode()
+
+      sound = SoundPlayerManager(context = applicationContext)
       gameField.sendActivity(this)
 
       startLevel()
@@ -79,6 +86,16 @@ class GameActivity : AppCompatActivity() {
       setupUI()
 
       listeners()
+   }
+
+   private fun buildVersionCode() {
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.DONUT) {
+         when (Build.VERSION.SDK_INT) {
+            LOLLIPOP, LOLLIPOP_MR1 -> {
+               gameField.setSpeed()
+            }
+         }
+      }
    }
 
    private fun startTimer() {
@@ -105,7 +122,7 @@ class GameActivity : AppCompatActivity() {
       val intent = intent
       val value = intent.getIntExtra(Constants.KEY_LEVEL, 0)
       level = value
-      milliLeft += level * 60000
+      milliLeft += level * 30000
       timer = milliLeft
       gameField.setArg(value)
    }
@@ -168,7 +185,7 @@ class GameActivity : AppCompatActivity() {
                restart()
             }
             OnClickStatus.EXIT -> {
-               this.onBackPressed()
+               openMenu()
             }
             OnClickStatus.MUSIC_ON -> {
                gameField.musicStatus(true)
@@ -209,9 +226,9 @@ class GameActivity : AppCompatActivity() {
    }
 
    override fun onBackPressed() {
-      super.onBackPressed()
-      gameField.switchOffGame()
-      finish()
+      val s = false
+      if (s)
+         super.onBackPressed()
    }
 
    private fun CDTimerBullet() {
@@ -319,16 +336,12 @@ class GameActivity : AppCompatActivity() {
 
             override fun onFinish() {
                isStarted = false
-               val pref = getSharedPreferences(resources.getString(R.string.pref), Context.MODE_PRIVATE)
-               score = pref.getInt(Constants.PREFS_LEVEL, 0)
-               var s = 0
-                  if (level >= score) {
-                     s = level + 1
-                  }
-               if (s != 0){
-                  pref.edit().putInt(Constants.PREFS_LEVEL, s).apply()
-               }
-               gameField.pauseGame()
+               val pref =
+                  getSharedPreferences(resources.getString(R.string.pref), Context.MODE_PRIVATE)
+               val prefLevel: Int = pref.getInt(Constants.PREFS_LEVEL, 0)
+               if (level == prefLevel || prefLevel == 0)
+                  pref.edit().putInt(Constants.PREFS_LEVEL, level + 1).apply()
+               onPauseLocal()
                VictoryDialog(score) { status ->
                   when (status) {
                      OnClickStatus.MENU -> {
@@ -375,20 +388,15 @@ class GameActivity : AppCompatActivity() {
       }
    }
 
-   override fun onResume() {
-      super.onResume()
-      timer1?.let {
-         onResumeCDT()
-         gameField.unPause()
-         isStarted = false
-         CDTimerGame(milliLeft)
-      }
+  override fun onPause() {
+     gameField.switchOffGame()
+     this@GameActivity.finish()
+     super.onPause()
    }
 
-   override fun onPause() {
-      super.onPause()
-      onPauseCDT() // все count down timer cancel
-      gameField.pauseGame()
-      timerClock?.cancel()
+   override fun onStop() {
+      gameField.switchOffGame()
+      this@GameActivity.finish()
+      super.onStop()
    }
 }

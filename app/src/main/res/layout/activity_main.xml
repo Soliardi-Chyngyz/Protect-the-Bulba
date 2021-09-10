@@ -11,7 +11,7 @@
         android:id="@+id/txt"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginVertical="20dp"
+        android:layout_marginVertical="30dp"
         android:text="@string/app_name"
         android:textColor="@color/white"
         android:textSize="29sp"
@@ -27,12 +27,14 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal|center_vertical|center"
             android:paddingHorizontal="20dp"
+            android:overScrollMode="never"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="4"
+            android:nestedScrollingEnabled="true"
             tools:listitem="@layout/level_item" />
     </LinearLayout>
 

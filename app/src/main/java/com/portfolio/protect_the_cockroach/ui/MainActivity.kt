@@ -29,9 +29,11 @@ class MainActivity : AppCompatActivity() {
    private val adapter = LevelAdapter(this, this::onItemClick)
 
    private var sound: SoundPlayerManager? = null
+   private var clicked = false
 
    override fun onCreate(savedInstanceState: Bundle?) {
       super.onCreate(savedInstanceState)
+
       setContentView(R.layout.activity_main)
 
       if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -68,21 +70,15 @@ class MainActivity : AppCompatActivity() {
 
    private fun onItemClick(value: Int) {
       if (value != 0) {
-         sound = null
-         val intent = Intent(this, GameActivity::class.java)
-         intent.putExtra(Constants.KEY_LEVEL, value)
-         startActivity(intent)
+         if (!clicked) {
+            sound = null
+            clicked = true
+            val intent = Intent(this, GameActivity::class.java)
+            intent.putExtra(Constants.KEY_LEVEL, value)
+            startActivity(intent)
+            finish()
+         }
       }
-   }
-
-   override fun onResume() {
-      super.onResume()
-      sound?.playTron()
-   }
-
-   override fun onPause() {
-      super.onPause()
-      sound?.pauseTron()
    }
 }
 

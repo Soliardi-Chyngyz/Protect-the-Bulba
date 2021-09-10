@@ -4,8 +4,10 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.SurfaceHolder
 import android.view.SurfaceView
+import androidx.lifecycle.ViewModelProvider
 import com.portfolio.protect_the_cockroach.`interface`.*
 import com.portfolio.protect_the_cockroach.ui.GameActivity
+import com.portfolio.protect_the_cockroach.ui.GameViewModel
 
 class GameField @JvmOverloads constructor(
    context: Context,
@@ -16,20 +18,28 @@ class GameField @JvmOverloads constructor(
    private var gameDrawThread: GameDrawThread? = null
    private var activity: GameActivity? = null
    private var score = 0
+   private var tankSpeed = 10
+
+   private var viewModel: GameViewModel? = null
 
    init {
       holder.addCallback(this)
+      activity?.let { viewModel = ViewModelProvider(it).get(GameViewModel::class.java) }
    }
 
    override fun surfaceCreated(holder: SurfaceHolder) {
 
    }
 
+   fun setSpeed() {
+      tankSpeed = 15
+   }
+
    fun musicStatus(b: Boolean) {
       gameDrawThread?.music(b)
    }
 
-   fun sendActivity(gameActivity: GameActivity) {
+   fun sendActivity(gameActivity: GameActivity?) {
       activity = gameActivity
    }
 
@@ -38,8 +48,8 @@ class GameField @JvmOverloads constructor(
    }
 
    fun switchOffGame() {
-      gameDrawThread!!.clearAll()
-      gameDrawThread!!.interrupt()
+      gameDrawThread?.clearAll()
+      gameDrawThread?.interrupt()
       gameDrawThread = null
    }
 
@@ -76,6 +86,7 @@ class GameField @JvmOverloads constructor(
             GameDrawThread(holder, resources, width.toDouble(), height.toDouble(), context, activity!!, score)
          gameDrawThread?.runFlag = true
          gameDrawThread?.start()
+         gameDrawThread?.setSpeed(tankSpeed)
       }
    }
 

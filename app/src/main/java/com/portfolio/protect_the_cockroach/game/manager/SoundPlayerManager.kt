@@ -46,7 +46,7 @@ class SoundPlayerManager(context: Context) {
       battleStart = MediaPlayer.create(context, R.raw.battle_start)
       pick = MediaPlayer.create(context, R.raw.pick)
       loose = MediaPlayer.create(context, R.raw.lose)
-      tron = MediaPlayer.create(context, R.raw.tron)
+      tron = MediaPlayer.create(context, R.raw.armory)
       intro1 = MediaPlayer.create(context, R.raw.intro)
       intro2 = MediaPlayer.create(context, R.raw.intro2)
    }
@@ -79,16 +79,16 @@ class SoundPlayerManager(context: Context) {
       battleStart?.start()
    }
 
-   fun playVot() {
-      vot_i_vse!!.start()
-   }
-
    fun playMotor() {
       motor!!.start()
    }
 
    fun pauseMotor() {
       motor!!.pause()
+   }
+
+   fun playVot() {
+      vot_i_vse!!.start()
    }
 
    fun playEto() {

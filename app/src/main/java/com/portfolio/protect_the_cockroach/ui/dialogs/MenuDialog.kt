@@ -3,6 +3,7 @@ package com.portfolio.protect_the_cockroach.ui.dialogs
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -24,11 +25,16 @@ class MenuDialog(
    private var restart: MaterialButton? = null
    private var checkBox: CheckBox? = null
 
+   override fun onCreate(savedInstanceState: Bundle?) {
+      super.onCreate(savedInstanceState)
+   }
+
    override fun onCreateView(
       inflater: LayoutInflater,
       container: ViewGroup?,
       savedInstanceState: Bundle?
    ): View? {
+
       if (dialog != null && dialog!!.window != null) {
          dialog!!.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
          dialog!!.window!!.requestFeature(Window.FEATURE_NO_TITLE)
@@ -43,6 +49,10 @@ class MenuDialog(
       init(view)
       checkBoxStatus()
       listeners()
+   }
+
+   override fun onStart() {
+      super.onStart()
    }
 
    private fun checkBoxStatus() {

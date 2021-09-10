@@ -27,6 +27,8 @@ open class DynamicObject(
    private var img = idBitmap
    var rotatedBitmap: Bitmap? = null
    var rotation: Float = 0f
+   var isFired = false
+   var randomValue = 10
 
    private val bitmap: Bitmap = BitmapFactory.decodeResource(resources, img)
    var resizeBitmap =
