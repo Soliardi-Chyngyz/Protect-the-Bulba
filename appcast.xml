@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<rss version="2.0.9" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
+<rss version="2.1.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
 <channel>
 <title>Debt Now App - Appcast</title>
 <item>
-<title>Version 2.0.9</title>
+<title>Version 2.1.0</title>
 <description></description>
-<pubDate>Sun, 21 Dec 2022 18:00:00 +0000</pubDate>
-<enclosure url="https://play.google.com/store/apps/details?id=kz.shymbulak" sparkle:version="2.0.9" sparkle:os="android" />
+<pubDate>Sun, 23 Dec 2022 15:00:00 +0000</pubDate>
+<enclosure url="https://play.google.com/store/apps/details?id=kz.shymbulak" sparkle:version="2.1.0" sparkle:os="android" />
 </item>
 </channel>
 </rss>
