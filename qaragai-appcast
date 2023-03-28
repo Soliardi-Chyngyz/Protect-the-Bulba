@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0" xmlns:sparkle="http://www.andymatuschak.org/xml-namespaces/sparkle">
     <channel>
-        <title>Debt Now App - Appcast</title>
+        <title>Oi-Qaraqai Mountain Resort</title>
         <item>
-            <title>Version 1.1.1</title>
+            <title>Версия 1.1.1</title>
             <description>Minor updates and improvements.</description>
             <pubDate>Sun, 28 mar Dec 2023 12:00:00 +0000</pubDate>
             <enclosure url="https://play.google.com/store/apps/details?id=kz.qaragai" sparkle:version="1.1.1" sparkle:os="android" />
